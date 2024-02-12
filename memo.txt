@@ -1,0 +1,19 @@
+la struct principale contient
+
+une struct data_time
+-nbr_of_philo
+-time_to_die
+-time_to_eat
+-time_to_sleep
+-number_of_times_each_philosopher_must_eat
+
+un tableau de struct de philo
+
+la struct philo : 
+-thread
+-mutex1 = FORKR
+-mutex2 = FORKL = mutex1 de philo - 1 (soit FORKR de philo - 1)
+
+
+									
+			0f				0&f					0f
