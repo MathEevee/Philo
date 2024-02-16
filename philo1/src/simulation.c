@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:34:13 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/13 14:59:40 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:05:13 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void eat_sleep(t_data *data)
 	usleep(data->time_to_eat);
 	pthread_mutex_lock(data->philo[data->i]->forkl);
 	pthread_mutex_lock(data->philo[data->i]->forkr);
+	
 	gettimeofday(&(data->philo[data->i]->start_philo), NULL);
 	usleep(data->time_to_sleep);
 }

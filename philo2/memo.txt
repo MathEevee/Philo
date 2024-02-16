@@ -1,0 +1,56 @@
+la struct principale contient
+
+une struct data_time
+-nbr_of_philo
+-time_to_die
+-time_to_eat
+-time_to_sleep
+-number_of_times_each_philosopher_must_eat
+
+un tableau de struct de philo
+
+la struct philo : 
+-thread
+-mutex1 = FORKR
+-mutex2 = FORKL = mutex1 de philo - 1 (soit FORKR de philo - 1)
+
+
+									
+			0f				0&f					0f
+			
+			
+j'ai un tableau de philo dans une struct qui contient chacun
+
+-l'adresse d'un thread
+-un mutex pour la fourchette droite
+-un mutex pour la fourchette gauche qui est egale a l'adresse du mutex forkr de philo - 1 (sauf si on
+est sur le philo 0 alors forkl de philo[0] = forkr[nbr_philo - 1]
+
+ce tableau est dans la struct data
+
+donc on accede comme ca a un i quand le thread se lance
+
+On fait d'abord usleep tout le monde,
+ensuite on regarde le resultat du %
+on lance une action
+
+on verifie si le temps restant suffit pour manger sinon on usleep le temps qu'il reste,
+le philo meurt, on write le message et on exit tous les thread
+
+sinon si le temps est ok
+on regarde le %
+on prend les deux fourchettes x temps
+on lock le mutex des deux adresses
+on usleep
+on reset le timer
+on unlock les mutex
+on usleep le temps de dormir
+
+sinon si le % ne va pas,
+on usleep le temps de manger
+on essaie de recuperer le mutex, si il est lock alors on usleep le temps de manger
+
+
+
+si mutex_lock != 0
+usleep le temps de manger et on retente jusqu'a pouvoir rentrer dans la boucle
