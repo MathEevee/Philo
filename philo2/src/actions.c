@@ -6,19 +6,17 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 12:58:05 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/16 16:06:24 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/17 10:00:03 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_time(t_data *data, int time)
+int	check_time(t_data *data, unsigned long long int time)
 {
-	int	diff;
+	unsigned long long int	diff;
 	
-	gettimeofday(&data->philo[data->i]->end_philo, NULL);
-	diff = &data->philo[data->i]->end_philo\
-			- &data->philo[data->i]->start_philo;
+	diff = calc_time(data);
 	if (diff + time > data->time_to_die)
 	{
 		data->philo[data->i]->status = DEAD;

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:26:25 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/16 16:06:37 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/17 10:01:44 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ typedef struct s_data
 	struct timeval	start;
 	struct timeval	end;
 	int				nbr_of_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	unsigned long long int				time_to_die;
+	unsigned long long int				time_to_eat;
+	unsigned long long int				time_to_sleep;
 	int				nbr_of_meals;
 	int				i;
 	t_philo			**philo;
@@ -54,7 +54,7 @@ typedef struct s_data
 }				t_data;
 
 // actions.c
-int	check_time(t_data *data, int time);
+int	check_time(t_data *data, unsigned long long int time);
 void	life_loop(t_data *data);
 void	first_part(t_data *data);
 // check_arg.c
@@ -78,5 +78,6 @@ void philo_init(t_data *data, t_philo **philo);
 void	timer_to_life(t_data *data);
 // utils.c
 int	ft_atoll(char *nbr);
+unsigned long long int	calc_time(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:34:13 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/16 16:03:20 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/17 09:06:30 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,5 @@ void philo_init(t_data *data, t_philo **philo)
 		data->philo[i]->philosopher = pthread_create(&philo[i], NULL, life_philo, data);
 		i--;
 	}
+	pthread_join(&(*philo), NULL);
 }

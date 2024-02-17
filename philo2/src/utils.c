@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 10:54:05 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/16 16:06:17 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/17 10:00:59 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,17 @@ int	ft_atoll(char *nbr)
 		i++;
 	}
 	return (sum);
+}
+
+unsigned long long int	calc_time(t_data *data)
+{
+	unsigned long long int	tmp_start;
+	unsigned long long int	tmp_end;
+	unsigned long long int	diff;
+
+	gettimeofday(&data->end, NULL);
+	tmp_end = (data->end.tv_sec * 1000000 + data->end.tv_usec) / 1000;
+	tmp_start = (data->start.tv_sec * 1000000 + data->start.tv_usec) / 1000;
+	diff = tmp_end - tmp_start;
+	return (diff);
 }
