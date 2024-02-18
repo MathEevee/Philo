@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:24:00 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/18 10:48:17 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:06:02 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ unsigned long long int	calc_time_philo(t_data *data)
 	unsigned long long int	diff;
 
 	gettimeofday(&data->end, NULL);
-	tmp_end = (data->philo[data->i]->end_philo.tv_sec * MS_TO_SEC \
-				+ data->philo[data->i]->end_philo.tv_usec) / 1000;
-	tmp_start = (data->philo[data->i]->start_philo.tv_sec * MS_TO_SEC \
-				+ data->philo[data->i]->start_philo.tv_usec) / 1000;
+	tmp_end = (data->philo[data->i].end_philo.tv_sec * MS_TO_SEC \
+				+ data->philo[data->i].end_philo.tv_usec) / 1000;
+	tmp_start = (data->philo[data->i].start_philo.tv_sec * MS_TO_SEC \
+				+ data->philo[data->i].start_philo.tv_usec) / 1000;
 	diff = tmp_end - tmp_start;
 	return (diff);
 }

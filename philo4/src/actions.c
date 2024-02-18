@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:08:23 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/18 10:55:00 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:02:47 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 void	philo_eat(t_data *data)
 {
-	pthread_mutex_lock(data->philo[data->i]->forkl);
-	data->philo[data->i]->status = EAT;
+	pthread_mutex_lock(&data->philo[data->i].forkl);
+	data->philo[data->i].status = EAT;
 	usleep(data->time_to_eat);
-	gettimeofday(&data->philo[data->i]->start_philo, NULL);
-	pthread_mutex_unlock(&data->philo[data->i]->forkr);
-	pthread_mutex_unlock(data->philo[data->i]->forkl);
+	gettimeofday(&data->philo[data->i].start_philo, NULL);
+	pthread_mutex_unlock(&data->philo[data->i].forkr);
+	pthread_mutex_unlock(&data->philo[data->i].forkl);
 }
 
 void	philo_sleep(t_data *data)
 {
-	data->philo[data->i]->status = SLEEP;
+	data->philo[data->i].status = SLEEP;
 	usleep(data->time_to_sleep);
 }
 
 void	philo_think(t_data *data)
 {
-	data->philo[data->i]->status = THINK;
-	pthread_mutex_lock(&data->philo[data->i]->forkr);
-	data->philo[data->i]->status = TAKE_FORK_R;
+	data->philo[data->i].status = THINK;
+	pthread_mutex_lock(&data->philo[data->i].forkr);
+	data->philo[data->i].status = TAKE_FORK_R;
 }
 
 void	first_part(t_data *data)
 {
-	data->philo[data->i]->status = THINK;
+	data->philo[data->i].status = THINK;
 	check_time_actions(data);
 	if (data->i % 3 == 1)
 	{
@@ -58,8 +58,7 @@ void	*life_philo(void *arg)
 	t_data *data;
 
 	data = (t_data *) arg;
-	init_forkr(data);
-	gettimeofday(&data->philo[data->i]->start_philo, NULL);
+	gettimeofday(&data->philo[data->i].start_philo, NULL);
 	first_part(data);
 	while(data->finish == LOOP)
 	{
