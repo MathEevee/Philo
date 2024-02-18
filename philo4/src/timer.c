@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:58:06 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/18 17:25:09 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:50:54 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void	send_end_msg(t_data *data, int i)
 void	check_time_actions(t_data *data)
 {
 	long long int	diff;
+	pthread_mutex_t	wait;
 
+	pthread_mutex_init(&wait, NULL);
+	pthread_mutex_lock(&wait);
 	gettimeofday(&data->philo[data->i].end_philo, NULL);
 	diff = calc_time_philo(data);
 	if (data->philo[data->i].status == EAT)
@@ -70,6 +73,8 @@ void	check_time_actions(t_data *data)
 		if (diff + data->time_to_eat * 2 > data->time_to_die)
 			init_data_death(data);
 	}
+	pthread_mutex_unlock(&wait);
+	pthread_mutex_destroy(&wait);
 }
 
 void	*check_action(void *arg)
@@ -81,7 +86,7 @@ void	*check_action(void *arg)
 	data = (t_data *) arg;
 	nbr_full_philo = 0;
 	i = 0;
-	while (nbr_full_philo <= data->nbr_of_philo)
+	while (nbr_full_philo <= data->nbr_of_philo - 1)
 	{
 		if (data->philo[data->i].status == FULL)
 			nbr_full_philo++;

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:22:38 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/18 16:59:32 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:36:29 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@
 # include <sys/time.h>
 # include <stdio.h>
 # define NOTHING 0
-# define TAKE_FORK_L 1
-# define TAKE_FORK_R 2
-# define EAT 3
-# define SLEEP 4
-# define THINK 5
-# define DEAD 6
-# define FULL 7
+# define TAKE_FORK_R 1
+# define EAT 2
+# define SLEEP 3
+# define THINK 4
+# define DEAD 5
+# define FULL 6
 # define MS_TO_SEC 1000000
 # define LOOP 1
 # define END 2

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:08:23 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/18 17:02:47 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:48:52 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,51 @@
 
 void	philo_eat(t_data *data)
 {
+	pthread_mutex_t	wait;
+
+	pthread_mutex_init(&wait, NULL);
+	pthread_mutex_lock(&wait);
 	pthread_mutex_lock(&data->philo[data->i].forkl);
 	data->philo[data->i].status = EAT;
 	usleep(data->time_to_eat);
 	gettimeofday(&data->philo[data->i].start_philo, NULL);
 	pthread_mutex_unlock(&data->philo[data->i].forkr);
 	pthread_mutex_unlock(&data->philo[data->i].forkl);
+	pthread_mutex_unlock(&wait);
+	pthread_mutex_destroy(&wait);
 }
 
 void	philo_sleep(t_data *data)
 {
+	pthread_mutex_t	wait;
+
+	pthread_mutex_init(&wait, NULL);
+	pthread_mutex_lock(&wait);
 	data->philo[data->i].status = SLEEP;
 	usleep(data->time_to_sleep);
+	pthread_mutex_unlock(&wait);
+	pthread_mutex_destroy(&wait);
 }
 
 void	philo_think(t_data *data)
 {
+	pthread_mutex_t	wait;
+
+	pthread_mutex_init(&wait, NULL);
+	pthread_mutex_lock(&wait);
 	data->philo[data->i].status = THINK;
 	pthread_mutex_lock(&data->philo[data->i].forkr);
 	data->philo[data->i].status = TAKE_FORK_R;
+	pthread_mutex_unlock(&wait);
+	pthread_mutex_destroy(&wait);
 }
 
 void	first_part(t_data *data)
 {
+	pthread_mutex_t	wait;
+
+	pthread_mutex_init(&wait, NULL);
+	pthread_mutex_lock(&wait);
 	data->philo[data->i].status = THINK;
 	check_time_actions(data);
 	if (data->i % 3 == 1)
@@ -51,6 +73,8 @@ void	first_part(t_data *data)
 		usleep(data->time_to_eat);
 		philo_think(data);
 	}
+	pthread_mutex_unlock(&wait);
+	pthread_mutex_destroy(&wait);
 }
 
 void	*life_philo(void *arg)
@@ -60,7 +84,7 @@ void	*life_philo(void *arg)
 	data = (t_data *) arg;
 	gettimeofday(&data->philo[data->i].start_philo, NULL);
 	first_part(data);
-	while(data->finish == LOOP)
+	while (data->finish == LOOP)
 	{
 		check_time_actions(data);
 		philo_eat(data);
