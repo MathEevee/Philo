@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:31:40 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/18 17:19:17 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:16:52 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_data(char **av, t_data *data)
 
 void init_forkl(int i, t_philo **philo, t_data *data)
 {
-	pthread_mutex_t forkl;
+	pthread_mutex_t	forkl;
 	
 	if (i == 0)
 		return ;
@@ -64,13 +64,13 @@ void	philo_init(t_data *data)
 		i++;
 	}
 	data->philo = *(philo);
+	gettimeofday(&data->start, NULL);
 	while (i >= 0)
 	{
 		data->i = i;
 		pthread_create(&data->philo[i].philosopher, NULL, life_philo, data);
 		i--;
 	}
-	// print_all(data);
 }
 
 void	init_data_death(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:58:06 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/18 17:50:54 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:24:15 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 void	print_action(t_data *data, int i)
 {
 	long long int	diff;
-	pthread_mutex_t	wait_write;
 
-	pthread_mutex_init(&wait_write, NULL);
-	pthread_mutex_lock(&wait_write);
 	gettimeofday(&data->end, NULL);
 	diff = calc_time(data);
-	printf("%llu : philo %d ", diff, i);
+	printf("%llu : philo %d ", diff, i + 1);
 	if (data->philo[i].status == TAKE_FORK_R)
 		printf("take a fork\n");
 	if (data->philo[i].status == EAT)
@@ -37,7 +34,6 @@ void	print_action(t_data *data, int i)
 		return ;
 	}
 	data->philo[i].status = 0;
-	pthread_mutex_unlock(&wait_write);
 }
 
 void	send_end_msg(t_data *data, int i)
@@ -52,10 +48,7 @@ void	send_end_msg(t_data *data, int i)
 void	check_time_actions(t_data *data)
 {
 	long long int	diff;
-	pthread_mutex_t	wait;
 
-	pthread_mutex_init(&wait, NULL);
-	pthread_mutex_lock(&wait);
 	gettimeofday(&data->philo[data->i].end_philo, NULL);
 	diff = calc_time_philo(data);
 	if (data->philo[data->i].status == EAT)
@@ -73,8 +66,6 @@ void	check_time_actions(t_data *data)
 		if (diff + data->time_to_eat * 2 > data->time_to_die)
 			init_data_death(data);
 	}
-	pthread_mutex_unlock(&wait);
-	pthread_mutex_destroy(&wait);
 }
 
 void	*check_action(void *arg)
