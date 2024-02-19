@@ -6,67 +6,69 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:08:23 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/17 17:25:23 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:48:18 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_eat(t_data *data)
+void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(data->philo[data->i]->forkl);
-	data->philo[data->i]->status = EAT;
-	usleep(data->time_to_eat);
-	gettimeofday(&data->philo[data->i]->start_philo, NULL);
-	pthread_mutex_unlock(&data->philo[data->i]->forkr);
-	pthread_mutex_unlock(data->philo[data->i]->forkl);
+	pthread_mutex_lock(&philo[philo->index_of_philo].forkl);
+	philo[philo->index_of_philo]->status = EAT;
+	philo[philo->index_of_philo]->nbr_meals++;
+	usleep(checkertime_to_eat);
+	gettimeofday(&checkerphilo[checkeri].start_philo, NULL);
 }
 
-void	philo_sleep(t_data *data)
+void	philo_sleep(t_data *checker)
 {
-	data->philo[data->i]->status = SLEEP;
-	usleep(data->time_to_sleep);
+	pthread_mutex_unlock(&checkerphilo[checkeri].forkr);
+	pthread_mutex_unlock(&checkerphilo[checkeri].forkl);
+	checkerphilo[checkeri].status = SLEEP;
+	usleep(checkertime_to_sleep);
 }
 
-void	philo_think(t_data *data)
+void	philo_think(t_data *checker)
 {
-	data->philo[data->i]->status = THINK;
-	pthread_mutex_lock(&data->philo[data->i]->forkr);
-	data->philo[data->i]->status = TAKE_FORK_R;
+	checkerphilo[checkeri].status = THINK;
+	pthread_mutex_lock(&checkerphilo[checkeri].forkr);
+	checkerphilo[checkeri].status = TAKE_FORK_R;
 }
 
-void	first_part(t_data *data)
+void	first_part(t_philo **philo)
 {
-	data->philo[data->i]->status = THINK;
-	check_time_actions(data);
-	if (data->i % 3 == 1)
+	philo[philo->index_of_philo].status = THINK;
+	check_time_actions(philo);
+	if (philo[philo->index_of_philo]->i % 3 == 1)
 	{
-		philo_think(data);
-		philo_eat(data);
+		philo_think(philo);
+		philo_eat(philo);
 	}
-	else if (data->i % 3 == 2)
-		philo_think(data);
+	else if (philo->i % 3 == 2)
+		philo_think(philo);
 	else
 	{
-		usleep(data->time_to_eat);
+		usleep(checkertime_to_eat);
 		philo_think(data);
 	}
 }
 
 void	*life_philo(void *arg)
 {
-	t_data *data;
+	t_philo **philo;
 
-	data = (t_data *) arg;
-	init_forkr(data);
-	gettimeofday(&data->philo[data->i]->start_philo, NULL);
-	first_part(data);
-	while(data->finish == LOOP)
+	philo = (t_philo **) arg;
+	gettimeofday(&philo[philo->index_of_philo].start_philo, NULL);
+	first_part(philo);
+	while (1)
 	{
-		check_time_actions(data);
-		philo_eat(data);
-		philo_think(data);
-		philo_sleep(data);
+		check_time_actions(philo);
+		philo_eat(philo);
+		check_time_actions(philo);
+		philo_sleep(philo);
+		check_time_actions(philo);
+		philo_think(philo);
 	}
 	return (NULL);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 10:52:58 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/07 13:18:10 by matde-ol         ###   ########.fr       */
+/*   Created: 2024/02/17 10:29:49 by matde-ol          #+#    #+#             */
+/*   Updated: 2024/02/17 16:10:45 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_data(char **av)
 	int				i;
 
 	ref = 0;
-	i = 0;
+	i = 1;
 	while (av[i] != NULL)
 	{
 		ref = ft_atoll(av[i]);

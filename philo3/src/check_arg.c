@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:29:49 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/17 16:10:45 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:43:45 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	check_arg_nbr(int ac)
 		return (0);
 }
 
-int	check_data(char **av)
+static int	check_data(char **av)
 {
 	long long int	ref;
 	int				i;
@@ -75,7 +75,9 @@ int	check_arg(int ac, char **av)
 {
 	if (check_arg_nbr(ac) == -1)
 		return (-1);
-	else if (check_is_digit(av) == -1)
+	if (check_is_digit(av) == -1)
+		return (-1);
+	if (check_data(av) == -1)
 		return (-1);
 	return (0);
 }

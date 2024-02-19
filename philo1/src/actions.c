@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:08:23 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/19 09:27:03 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:04:17 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	*life_philo(void *arg)
 	{
 		check_time_actions(data);
 		philo_eat(data);
-		philo_think(data);
 		philo_sleep(data);
+		philo_think(data);
 	}
 	return (NULL);
 }

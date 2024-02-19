@@ -5,108 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/16 12:58:05 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/17 10:00:03 by matde-ol         ###   ########.fr       */
+/*   Created: 2024/02/17 10:08:23 by matde-ol          #+#    #+#             */
+/*   Updated: 2024/02/19 14:36:05 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_time(t_data *data, unsigned long long int time)
+void	philo_eat(t_philo *philo)
 {
-	unsigned long long int	diff;
-	
-	diff = calc_time(data);
-	if (diff + time > data->time_to_die)
-	{
-		data->philo[data->i]->status = DEAD;
-		data->finish = END;
-		return (-1);
-	}
-	if (data->i % 3 == 2)
-	{
-		data->philo[data->i]->status = TAKE_FORK_R;
-		pthread_mutex_lock(data->philo[data->i]->forkr);
-		usleep(data->time_to_eat);
-	}
-	else if (data->i % 3 == 1)
-	{
-		data->philo[data->i]->status = TAKE_FORK_R;
-		pthread_mutex_lock(data->philo[data->i]->forkr);
-	}
-	else
-		data->philo[data->i]->status = THINK;
-	return (0);
+	pthread_mutex_lock(&philo[philo->index_of_philo].forkl);
+	philo[philo->index_of_philo]->status = EAT;
+	philo[philo->index_of_philo]->nbr_meals++;
+	usleep(checkertime_to_eat);
+	gettimeofday(&checkerphilo[checkeri].start_philo, NULL);
 }
 
-void	life_loop(t_data *data)
+void	philo_sleep(t_data *checker)
 {
-	gettimeofday(&data->philo[data->i]->end_philo, NULL);
-	if (check_time(data, data->time_to_eat))
-	{
-		usleep(&data->time_to_die - &data->philo[data->i]->end_philo);
-		data->philo[data->i]->status = DEAD;
-		data->finish = END;
-	}
-	pthread_mutex_lock(data->philo[data->i]->forkl);
-	data->philo[data->i]->status = EAT;
-	usleep(data->time_to_eat);
-	gettimeofday(&data->philo[data->i]->start_philo, NULL);
-	pthread_mutex_unlock(data->philo[data->i]->forkl);
-	pthread_mutex_unlock(data->philo[data->i]->forkr);
-	data->philo[data->i]->status = SLEEP;
-	usleep(data->time_to_sleep);
-	pthread_mutex_lock(data->philo[data->i]->forkr);
-	data->philo[data->i]->status = TAKE_FORK_R;
-	usleep(data->time_to_eat);
-	data->philo[data->i]->status = THINK;
+	pthread_mutex_unlock(&checkerphilo[checkeri].forkr);
+	pthread_mutex_unlock(&checkerphilo[checkeri].forkl);
+	checkerphilo[checkeri].status = SLEEP;
+	usleep(checkertime_to_sleep);
 }
 
-void	first_part(t_data *data)
+void	philo_think(t_data *checker)
 {
-	gettimeofday(&data->philo[data->i]->start_philo, NULL);
-	data->philo[data->i]->status = THINK;
-	usleep(100);
-	if (data->i % 3 == 0)
+	checkerphilo[checkeri].status = THINK;
+	pthread_mutex_lock(&checkerphilo[checkeri].forkr);
+	checkerphilo[checkeri].status = TAKE_FORK_R;
+}
+
+void	first_part(t_data *checker)
+{
+	checkerphilo[checkeri].status = THINK;
+	check_time_actions(data);
+	if (checkeri % 3 == 1)
 	{
-		if (check_time(data, data->time_to_eat * 3) == -1)
-		return ;
+		philo_think(data);
+		philo_eat(data);
 	}
-	else if (data->i % 3 == 2)
-	{
-		if (check_time(data, data->time_to_eat * 2) == -1)
-		return ;
-	}
+	else if (checkeri % 3 == 2)
+		philo_think(data);
 	else
 	{
-		if (check_time(data, data->time_to_eat) == -1)
-		return ;
+		usleep(checkertime_to_eat);
+		philo_think(data);
 	}
 }
-/*	gettimeofday(&data->philo[data->i]->start_philo, NULL);
-	usleep(100);
-	if (data->i % 3 == 1)
-		check_time(data, data->time_to_eat);
-	else if (data->i % 3 == 2)
-	{
-		check_time(data, data->time_to_eat * 2);
-		data->philo[data->i]->status = TAKE_FORK_R;
-	}
-	else
-	{
-		check_time(data, data->time_to_eat * 3);
-		data->philo[data->i]->status = THINK;
-	}
-	
-	
-	
-	struct timeval *diff;
 
-	gettimeofday(&data->philo[data->i]->end_philo, NULL);
-	diff = &data->philo[data->i]->end_philo -\
-			&data->philo[data->i]->start_philo;
-	if (diff > &data->time_to_die)
+void	*life_philo(void *arg)
+{
+	t_philo *philo;
+
+	philo = (t_philo *) arg;
+	gettimeofday(&philo[philo->index_of_philo].start_philo, NULL);
+	first_part(philo);
+	while (philo[philo->index_of_philo].nbr_meals != philo[philo->index_of_philo].nbr_meals_full)
 	{
-		
+		check_time_actions(philo);
+		philo_eat(philo);
+		check_time_actions(philo);
+		philo_sleep(philo);
+		check_time_actions(philo);
+		philo_think(philo);
 	}
-*/
+	return (NULL);
+}

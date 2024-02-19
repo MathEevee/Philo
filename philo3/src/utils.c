@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:24:00 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/17 16:08:29 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:17:54 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,30 @@ long long int	ft_atoll(char *nbr)
 	return (sum);
 }
 
-unsigned long long int	calc_time(t_data *data)
+unsigned long long int	calc_time(t_checker *checker)
 {
 	unsigned long long int	tmp_start;
 	unsigned long long int	tmp_end;
 	unsigned long long int	diff;
 
-	gettimeofday(&data->end, NULL);
-	tmp_end = (data->end.tv_sec * MS_TO_SEC + data->end.tv_usec) / 1000;
-	tmp_start = (data->start.tv_sec * MS_TO_SEC + data->start.tv_usec) / 1000;
+	gettimeofday(&checker->end, NULL);
+	tmp_end = (checker->end.tv_sec * MS_TO_SEC + checker->end.tv_usec) / 1000;
+	tmp_start = (checker->start.tv_sec * MS_TO_SEC + checker->start.tv_usec) / 1000;
 	diff = tmp_end - tmp_start;
 	return (diff);
 }
 
-unsigned long long int	calc_time_philo(t_data *data)
+unsigned long long int	calc_time_philo(t_philo **philo)
 {
 	unsigned long long int	tmp_start;
 	unsigned long long int	tmp_end;
 	unsigned long long int	diff;
 
-	gettimeofday(&data->end, NULL);
-	tmp_end = (data->philo[data->i]->end_philo.tv_sec * MS_TO_SEC \
-				+ data->philo[data->i]->end_philo.tv_usec) / 1000;
-	tmp_start = (data->philo[data->i]->start_philo.tv_sec * MS_TO_SEC \
-				+ data->philo[data->i]->start_philo.tv_usec) / 1000;
+	// gettimeofday(&philo->end, NULL);
+	// tmp_end = (checker->philo[checker->i].end_philo.tv_sec * MS_TO_SEC \
+	// 			+ checker->philo[checker->i].end_philo.tv_usec) / 1000;
+	// tmp_start = (checkerphilo[checkeri].start_philo.tv_sec * MS_TO_SEC \
+	// 			+ checkerphilo[checkeri].start_philo.tv_usec) / 1000;
 	diff = tmp_end - tmp_start;
 	return (diff);
 }

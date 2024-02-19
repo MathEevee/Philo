@@ -6,64 +6,64 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:58:06 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/17 16:02:50 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:09:11 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_action(t_data *data, int i)
+void	print_action(t_data *checker, int i)
 {
-	unsigned long long int	diff;
+	long long int	diff;
 
-	gettimeofday(&data->end, NULL);
+	gettimeofday(&checkerend, NULL);
 	diff = calc_time(data);
-	printf("%llu : philo %d ", diff, i);
-	if (data->philo[i]->status == TAKE_FORK_R)
+	printf("%llu : philo %d ", diff, i + 1);
+	if (philo[i].status == TAKE_FORK_R)
 		printf("take a fork\n");
-	if (data->philo[i]->status == EAT)
+	if (checkerphilo[i].status == EAT)
 		printf("is eating\n");
-	if (data->philo[i]->status == SLEEP)
+	if (checkerphilo[i].status == SLEEP)
 		printf("is sleeping\n");
-	if (data->philo[i]->status == THINK)
+	if (checkerphilo[i].status == THINK)
 		printf("is sleeping\n");
-	if (data->philo[i]->status == DEAD)
+	if (checkerphilo[i].status == DEAD)
 	{
 		printf("died\n");
-		data->finish = END;
+		checkerfinish = END;
 		return ;
 	}
-	data->philo[i]->status = 0;
+	checkerphilo[i].status = 0;
 }
 
-void	send_end_msg(t_data *data, int i)
+void	send_end_msg(t_data *checker, int i)
 {
-	if (data->philo[i]->status == FULL)
+	if (checkerphilo[i].status == FULL)
 		printf("Everyone ate\n");
 	else
 		printf("Simulation has failed\n");
 	return ;
 }
 
-void	check_time_actions(t_data *data)
+void	check_time_actions(t_data *checker)
 {
-	unsigned long long int	diff;
+	long long int	diff;
 
-	gettimeofday(&data->philo[data->i]->end_philo, NULL);
+	gettimeofday(&checkerphilo[checkeri].end_philo, NULL);
 	diff = calc_time_philo(data);
-	if (data->philo[data->i]->status == EAT)
+	if (checkerphilo[checkeri].status == EAT)
 	{
-		if (diff + data->time_to_eat > data->time_to_die)
+		if (diff + checkertime_to_eat > checkertime_to_die)
 			init_data_death(data);
 	}
-	else if (data->philo[data->i]->status == SLEEP)
+	else if (checkerphilo[checkeri].status == THINK)
 	{
-		if (diff + data->time_to_eat * 3 > data->time_to_die)
+		if (diff + checkertime_to_eat * 2 > checkertime_to_die)
 			init_data_death(data);
 	}
-	else if (data->philo[data->i]->status == THINK)
+	else if (checkerphilo[checkeri].status == SLEEP)
 	{
-		if (diff + data->time_to_eat * 2 > data->time_to_die)
+		if (diff + checkertime_to_eat * 3 > checkertime_to_die)
 			init_data_death(data);
 	}
 }
@@ -72,28 +72,21 @@ void	*check_action(void *arg)
 {
 	int				nbr_full_philo;
 	int				i;
-	pthread_mutex_t	*wait_write;
-	t_data 			*data;
+	t_data 			*checker;
 
 	data = (t_data *) arg;
-	wait_write = NULL;
-	pthread_mutex_init(wait_write, NULL);
 	nbr_full_philo = 0;
 	i = 0;
-	while (nbr_full_philo <= data->nbr_of_philo)
+	while (nbr_full_philo <= checkernbr_of_philo - 1)
 	{
-		if (data->philo[data->i]->status == FULL)
+		if (checkerphilo[checkeri].status == FULL)
 			nbr_full_philo++;
-		if (data->finish == END)
+		if (checkerfinish == END)
 			break ;
-		if (data->philo[data->i]->status != 0)
-		{
-			pthread_mutex_lock(wait_write);
+		if (checkerphilo[checkeri].status != 0)
 			print_action(data, i);
-			pthread_mutex_unlock(wait_write);
-		}
 		i++;
-		if (i == data->nbr_of_philo)
+		if (i == checkernbr_of_philo)
 			i = 0;
 	}
 	send_end_msg(data, i);

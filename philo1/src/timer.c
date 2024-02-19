@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:58:06 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/19 09:24:15 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:57:52 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*check_action(void *arg)
 	data = (t_data *) arg;
 	nbr_full_philo = 0;
 	i = 0;
-	while (nbr_full_philo <= data->nbr_of_philo - 1)
+	while (nbr_full_philo <= data->nbr_of_philo)
 	{
 		if (data->philo[data->i].status == FULL)
 			nbr_full_philo++;

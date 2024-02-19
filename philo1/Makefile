@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/28 11:10:49 by matde-ol          #+#    #+#              #
-#    Updated: 2024/02/07 11:47:49 by matde-ol         ###   ########.fr        #
+#    Created: 2024/02/17 10:22:01 by matde-ol          #+#    #+#              #
+#    Updated: 2024/02/17 10:22:19 by matde-ol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,17 @@ CC = cc
 DIR_SRC = src/
 DIR_OBJ = obj/
 
-FLAGS = -Werror -Wextra -Wall
+FLAGS = -Werror -Wextra -Wall -g
 
 SRC = \
-	check_arg.c \
-	init_data.c \
-	utils.c \
-	philo.c
+		 actions.c \
+		 check_arg.c \
+		 init_data.c \
+		 philo.c \
+		 timer.c \
+		 utils.c \
+		 fichier_a_suppr.c
+	
 
 OBJ = $(addprefix $(DIR_OBJ),$(SRC:.c=.o))
 
