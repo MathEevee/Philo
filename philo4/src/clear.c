@@ -1,27 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.c                                       :+:      :+:    :+:   */
+/*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 14:40:26 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 13:19:12 by matde-ol         ###   ########.fr       */
+/*   Created: 2024/02/20 14:48:10 by matde-ol          #+#    #+#             */
+/*   Updated: 2024/02/20 15:21:49 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	simulation_life(t_philo **philo, t_checker *checker)
+void clear_stop(t_philo **philo, t_checker *checker, int i)
+{
+	int	j;
+
+	j = 0;
+	while (philo[j] != NULL)
+	{
+		pthread_mutex_destroy(&philo[j]->forkr);
+		pthread_mutex_destroy(&philo[j]->forkl);
+		if (j == i)
+			j++;
+		if (j == checker->nbr_of_philo)
+			break ;
+		pthread_join(philo[j]->philosopher, NULL);
+	}
+	free_philo(philo);
+	free(checker);
+}
+
+void	free_philo(t_philo **philo)
 {
 	int	i;
 
 	i = 0;
-	gettimeofday(&checker->start, NULL);
-	while (i <= checker->nbr_of_philo - 1)
+	while (philo[i] != NULL)
 	{
-		pthread_create(&philo[i]->philosopher, NULL, life_philo, philo[i]);
+		free(philo[i]);
 		i++;
 	}
-	check_life(philo, checker);
+	free(philo);
 }

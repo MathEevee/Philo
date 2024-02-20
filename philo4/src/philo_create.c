@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_philo.c                                       :+:      :+:    :+:   */
+/*   philo_create.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 16:20:09 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 13:44:40 by matde-ol         ###   ########.fr       */
+/*   Created: 2024/02/20 14:10:02 by matde-ol          #+#    #+#             */
+/*   Updated: 2024/02/20 15:48:40 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	init_philo_end(t_philo **philo, t_checker *checker)
-{
-	int	i;
-
-	i = 0;
-	while (i <= checker->nbr_of_philo)
-	{
-		philo[i]->loop = END;
-		i++;
-	}
-}
 
 static void init_forkl(int i, t_philo **philo, t_checker *checker)
 {
@@ -49,24 +37,31 @@ static void	init_forkr(int i, t_philo **philo, t_checker *checker)
 	init_forkl(i, philo, checker);
 }
 
-t_philo	**philo_init(t_checker *checker)
+t_philo	**philo_init(t_checker *checker, char **av)
 {
 	int				i;
 	t_philo			**philo;
 
 	i = 0;
 	checker->finish = LOOP;
+	gettimeofday(&checker->start, NULL);
 	philo = malloc(sizeof(t_philo) * (checker->nbr_of_philo));
+	//protec
 	while (i <= checker->nbr_of_philo - 1)
 	{
 		philo[i] = malloc(sizeof(t_philo));
-		philo[i]->nbr_meals = 0;
+		//protec
+		philo[i]->nbr_meals_count = 0;
 		philo[i]->status = NOTHING;
-		philo[i]->index_of_philo = i;
-		philo[i]->time_to_sleep = checker->time_to_sleep;
-		philo[i]->time_to_eat = checker->time_to_eat;
+		philo[i]->idx_philo = i;
+		philo[i]->time_to_die = ft_atoll(av[2]);
+		philo[i]->time_to_eat = ft_atoll(av[3]);
+		philo[i]->time_to_sleep = ft_atoll(av[4]);
+		philo[i]->nbr_of_meals_total = ft_atoll(av[5]);
 		init_forkr(i, philo, checker);
 		i++;
 	}
+	print_all(checker, philo);
+	philo[i] = NULL;
 	return (philo);
 }
