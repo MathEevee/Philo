@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:36 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 15:38:56 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:40:57 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 
 static void	first_part(t_philo *philo)
 {
-	philo[philo->idx_philo].status = THINK;
-	usleep(1000);
 	check_time_actions(philo);
-	if (philo[philo->idx_philo].idx_philo % 2 == 0)
+	if ((philo->idx_philo + 1) % 3 == 1)
 	{
 		philo_think(philo);
 		philo_eat(philo);
 	}
-	// else if (philo[philo->idx_philo].idx_philo % 2 == 1)
-	// 	philo_think(philo);
+	else if ((philo->idx_philo + 1) % 3 == 2)
+	{
+		usleep(philo->time_to_eat);
+		philo_think(philo);
+	}
 	else
 	{
-		usleep(1000);
+		usleep(philo->time_to_eat * 2);
 		philo_think(philo);
 	}
 }
@@ -63,7 +64,7 @@ void	start_simulation(t_philo **philo, t_checker *checker)
 
 	i = 0;
 	gettimeofday(&checker->start, NULL);
-	while (i <= checker->nbr_of_philo - 1)
+	while (i < checker->nbr_of_philo)
 	{
 		pthread_create(&philo[i]->philosopher, NULL, life_philo, philo[i]);
 		i++;

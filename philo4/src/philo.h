@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:12 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 15:50:25 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:23:56 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct s_philo
 	struct timeval	start_philo;
 	struct timeval	end_philo;
 	pthread_t		philosopher;
-	pthread_mutex_t	forkl;
-	pthread_mutex_t	forkr;
+	pthread_mutex_t	*forkl;
+	pthread_mutex_t	*forkr;
 	int				status;
-	int				nbr_of_meals_total;
+	long long int	nbr_of_meals_total;
 	int				nbr_meals_count;
 	long long int	time_to_eat;
 	long long int	time_to_sleep;

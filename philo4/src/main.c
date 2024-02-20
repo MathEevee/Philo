@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:05:31 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 15:25:31 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:35:03 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int ac, char **av)
 	//protec
 	checker->nbr_of_philo = ft_atoll(av[1]);
 	philo = philo_init(checker, av);
+	// print_all(checker, philo);
 	//protec
 	start_simulation(philo, checker);
 	return (0);

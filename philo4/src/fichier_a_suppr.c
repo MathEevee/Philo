@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:29:52 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 15:45:05 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:02:17 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_all(t_checker *checker, t_philo **philo)
 	{
 		printf("philo[i]->i : %d\n", philo[i]->idx_philo);
 		printf("philo[i]->status : %d\n", philo[i]->status);
-		printf("philo[i]->nbr_of_meals_total : %d\n", philo[i]->nbr_of_meals_total);
+		printf("philo[i]->nbr_of_meals_total : %lld\n", philo[i]->nbr_of_meals_total);
 		printf("philo[i]->time_to_eat : %lld\n", philo[i]->time_to_eat);
 		printf("philo[i]->time_to_sleep : %lld\n", philo[i]->time_to_sleep);
 		printf("philo[i]->nbr_meals_count : %d\n", philo[i]->nbr_meals_count);

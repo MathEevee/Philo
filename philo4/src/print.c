@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:45:27 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 15:49:42 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:18:29 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	print_action(t_checker *checker, int i, t_philo *philo)
 	diff = calc_time(checker);
 	printf("%llu : philo %d ", diff, i + 1);
 	if (philo->status == TAKE_FORK_R)
-		printf("take a fork\n");
+		printf("taken a fork\n");
 	if (philo->status == EAT)
 		printf("is eating\n");
 	if (philo->status == SLEEP)
 		printf("is sleeping\n");
 	if (philo->status == THINK)
-		printf("is sleeping\n");
-	if (philo[i].status == DEAD)
+		printf("is thinking\n");
+	if (philo->status == DEAD)
 	{
 		printf("died\n");
 		checker->finish = END;
