@@ -6,7 +6,7 @@
 #    By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 10:22:01 by matde-ol          #+#    #+#              #
-#    Updated: 2024/02/17 10:22:19 by matde-ol         ###   ########.fr        #
+#    Updated: 2024/02/19 16:32:48 by matde-ol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,16 @@ DIR_OBJ = obj/
 FLAGS = -Werror -Wextra -Wall -g
 
 SRC = \
-		 actions.c \
-		 check_arg.c \
-		 init_data.c \
-		 philo.c \
-		 timer.c \
-		 utils.c \
-		 fichier_a_suppr.c
-	
+		action_philo.c \
+		check_arg.c \
+		check_life_philo.c \
+		clear.c \
+		philo_create.c \
+		print.c \
+		simulation.c \
+		utils.c \
+		main.c \
+		fichier_a_suppr.c
 
 OBJ = $(addprefix $(DIR_OBJ),$(SRC:.c=.o))
 

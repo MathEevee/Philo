@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:45:27 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 17:18:29 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/21 09:53:21 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_action(t_checker *checker, int i, t_philo *philo)
 		checker->finish = END;
 		return ;
 	}
-	philo->status = NOTHING;
+	philo->print = NO;
 }
 
 void	end_message(t_philo **philo, t_checker *checker, int nbr_of_philo_full)

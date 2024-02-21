@@ -5,29 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 10:01:16 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/18 17:06:50 by matde-ol         ###   ########.fr       */
+/*   Created: 2024/02/20 15:29:52 by matde-ol          #+#    #+#             */
+/*   Updated: 2024/02/20 17:02:17 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_all(t_data *data)
+void	print_all(t_checker *checker, t_philo **philo)
 {
 	int	i;
 
 	i = 0;
-	printf("data->nbr_of_philo : %d\n", data->nbr_of_philo);
-	printf("data->time_to_die : %lld\n", data->time_to_die);
-	printf("data->time_to_eat : %lld\n", data->time_to_eat);
-	printf("data->time_to_sleep : %lld\n", data->time_to_sleep);
-	printf("data->nbr_of_meals : %d\n", data->nbr_of_meals);
-	printf("data->finish : %d\n", data->finish);
-	while (i <= data->nbr_of_philo - 1)
+	printf("nbr_of_philo : %d\n", checker->nbr_of_philo);
+	while (i <= checker->nbr_of_philo - 1)
 	{
-		printf("data->philo[i].i : %d\n", data->philo[i].i);
-		printf("data->philo[i].status : %d\n", data->philo[i].status);
-		printf("data->philo[i].nbr_meals : %d\n", data->philo[i].nbr_meals);
+		printf("philo[i]->i : %d\n", philo[i]->idx_philo);
+		printf("philo[i]->status : %d\n", philo[i]->status);
+		printf("philo[i]->nbr_of_meals_total : %lld\n", philo[i]->nbr_of_meals_total);
+		printf("philo[i]->time_to_eat : %lld\n", philo[i]->time_to_eat);
+		printf("philo[i]->time_to_sleep : %lld\n", philo[i]->time_to_sleep);
+		printf("philo[i]->nbr_meals_count : %d\n", philo[i]->nbr_meals_count);
+		printf("philo[i]->time_to_die : %lld\n", philo[i]->time_to_die);
 		printf("\n\n");
 		i++;
 	}

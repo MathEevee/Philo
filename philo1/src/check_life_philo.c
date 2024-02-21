@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:16:33 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 17:47:19 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/21 09:53:06 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	check_life(t_philo **philo, t_checker *checker)
 		// pthread_mutex_lock(wait_print);
 		if (philo[i]->status == FULL)
 			nbr_of_philo_full++;
-		if (philo[i]->status != NOTHING)
+		if (philo[i]->status != NOTHING && philo[i]->print == YES)
 			print_action(checker, i, philo[i]);
 		if (philo[i]->status == DEAD)
 			break ;

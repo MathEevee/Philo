@@ -6,84 +6,74 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:02 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/20 18:25:51 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/21 10:02:30 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void init_forkl(int i, t_philo **philo)
+static void init_forkl(t_philo **philo, t_checker *checker)
 {
-	philo[0]->forkl = philo[i - 1]->forkr;
-	while (i >= 0)
+	int	i;
+
+	i = 0;
+	while (i < checker->nbr_of_philo)
 	{
-		philo[i - 1]->forkl = philo[i - 2]->forkl;
+		if (i == 0)
+			philo[i]->forkl = philo[checker->nbr_of_philo - 1]->forkr;
+		else
+			philo[i]->forkl = philo[i - 1]->forkr;
 		printf("philo[%d]->forkl < %p\n", i ,philo[i]->forkl);
-		printf("philo[%d]->forkr > %p\n", i ,philo[i]->forkr);
-		i--;
+		i++;
 	}
 }
 
-static void	init_forkr(int i, t_philo **philo)
+
+static void	init_forkr(t_philo *philo)
 {
 	pthread_mutex_t	*forkr;
 	
 	forkr = malloc(sizeof(pthread_mutex_t));
-	philo[i]->forkr = forkr;
-	pthread_mutex_init(philo[i]->forkr, NULL);
+	philo->forkr = forkr;
+	pthread_mutex_init(philo->forkr, NULL);
 }
 
-// static void init_forkl(int i, t_philo **philo, t_checker *checker)
-// {
-// 	pthread_mutex_t	forkl;
-	
-// 	if (i == 0)
-// 		return ;
-// 	pthread_mutex_init(&forkl, NULL);
-// 	if (i == checker->nbr_of_philo - 1)
-// 	{
-// 		philo[i]->forkl = philo[0]->forkr;
-// 		return ;
-// 	}
-// 	forkl = philo[i - 1]->forkr;
-// 	philo[i]->forkl = forkl;
-// }
-
-// static void	init_forkr(int i, t_philo **philo, t_checker *checker)
-// {
-// 	pthread_mutex_t	forkr;
-	
-// 	pthread_mutex_init(&forkr, NULL);
-// 	philo[i]->forkr = forkr;
-// 	init_forkl(i, philo, checker);
-// }
+static void	init_value_philo(t_philo *philo, char **av, int i)
+{
+	philo->nbr_meals_count = 0;
+	philo->status = THINK;
+	philo->idx_philo = i;
+	philo->time_to_die = ft_atoll(av[2]);
+	philo->time_to_eat = ft_atoll(av[3]);
+	philo->time_to_sleep = ft_atoll(av[4]);
+	philo->nbr_of_meals_total = ft_atoll(av[5]);
+	init_forkr(philo);
+}
 
 t_philo	**philo_init(t_checker *checker, char **av)
 {
 	int				i;
 	t_philo			**philo;
+	pthread_mutex_t	*write;
 
 	i = 0;
 	checker->finish = LOOP;
 	gettimeofday(&checker->start, NULL);
+	write = malloc(sizeof(pthread_mutex_t));
 	philo = malloc(sizeof(t_philo) * (checker->nbr_of_philo + 1));
 	//protec
 	while (i < checker->nbr_of_philo)
 	{
 		philo[i] = malloc(sizeof(t_philo));
 		//protec
-		philo[i]->nbr_meals_count = 0;
-		philo[i]->status = THINK;
-		philo[i]->idx_philo = i;
-		philo[i]->time_to_die = ft_atoll(av[2]);
-		philo[i]->time_to_eat = ft_atoll(av[3]);
-		philo[i]->time_to_sleep = ft_atoll(av[4]);
-		philo[i]->nbr_of_meals_total = ft_atoll(av[5]);
-		init_forkr(i, philo);
-		printf("philo[%d]->forkr > %p\n", i ,philo[i]->forkr);
+		init_value_philo(philo[i], av, i);
+		philo[i]->write = write;
+		// printf("philo[%d]->forkr > %p\n", i ,philo[i]->forkr);
 		i++;
 	}
-	init_forkl(i, philo);
+	init_forkl(philo, checker);
+	pthread_mutex_init(write, NULL);
+	printf("%d\n", i);
 	// print_all(checker, philo);
 	return (philo);
 }
