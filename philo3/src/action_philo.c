@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:31:16 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/24 10:01:16 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:53:41 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	philo_die(t_philo *philo, long long int diff)
 	long long int	time_to_die;
 	
 	time_to_die = philo->all_d_ph->time_to_die;
-	usleep(time_to_die - diff);
+	usleep((time_to_die - diff) * 1000);
 	philo->status = DEAD;
 	print_action(philo, DEAD);
 	// free(philo->write);
@@ -42,10 +42,10 @@ void	philo_eat(t_philo *philo)
 	if (philo->nbr_meals_count >= philo->all_d_ph->nbr_of_meals)
 		philo->status_meals = FULL_PHILO;
 	pthread_mutex_unlock(philo->write);
-	usleep(philo->all_d_ph->time_to_eat);
+	usleep(philo->all_d_ph->time_to_eat * 1000);
 	gettimeofday(&philo->ptime->start, NULL);
-	pthread_mutex_unlock(philo->forkl);
 	pthread_mutex_unlock(philo->forkr);
+	pthread_mutex_unlock(philo->forkl);
 }
 
 void	philo_sleep(t_philo *philo)
@@ -53,8 +53,7 @@ void	philo_sleep(t_philo *philo)
 	pthread_mutex_lock(philo->write);
 	print_action(philo, SLEEP);
 	pthread_mutex_unlock(philo->write);
-	usleep(philo->all_d_ph->time_to_sleep);
-	// usleep(500);
+	usleep(philo->all_d_ph->time_to_sleep * 1000);
 }
 
 void	philo_think(t_philo *philo)
@@ -62,5 +61,4 @@ void	philo_think(t_philo *philo)
 	pthread_mutex_lock(philo->write);
 	print_action(philo, THINK);
 	pthread_mutex_unlock(philo->write);
-	// usleep(500);
 }

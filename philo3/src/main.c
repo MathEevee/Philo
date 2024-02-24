@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:05:31 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/23 10:42:06 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:33:39 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ int	main(int ac, char **av)
 		return (0);
 	if (begin_simulation(av[1], data_simulation) == -1)
 		return (0);
-	// start_simulation(philo, checker);
 	return (0);
 }

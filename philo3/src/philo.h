@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:12 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/24 10:01:46 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 13:11:36 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/time.h>
 # include <stdio.h>
 # define LOOP 1
+# define END 2
 # define FULL_PHILO 3
 # define DEAD 6
 # define NOTHING 1
@@ -78,6 +79,7 @@ void	check_life(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
 void	start_simulation_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
 /*clear.c*/
 void	free_philo(t_philo **philo);
+void	set_end(t_philo **philo, t_checker checker);
 void clear_stop(t_philo **philo, t_checker checker, int i);
 /*philo_create.c*/
 int	init_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim);

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:36 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/23 16:15:48 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 13:31:22 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	philo_routine(t_philo *philo)
 		return (-1);
 	if (philo->status_meals == FULL_PHILO)
 		return (-1);
+	check_time_actions(philo);
 	return (0);
 }
 
@@ -47,13 +48,12 @@ static void	*life_philo(void *arg)
 	check_time_actions(philo);
 	philo_think(philo);
 	first_part(philo);
-	while (philo->status_meals != FULL_PHILO)
+	while (philo->status_meals == NOTHING)
 	{
 		if (philo_routine(philo) == -1)
 			break ;
 		philo_think(philo);
 	}
-	philo_sleep(philo);
 	return (NULL);
 }
 

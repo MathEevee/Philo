@@ -6,7 +6,7 @@
 #    By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 10:22:01 by matde-ol          #+#    #+#              #
-#    Updated: 2024/02/19 16:32:48 by matde-ol         ###   ########.fr        #
+#    Updated: 2024/02/24 11:32:20 by matde-ol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 DIR_SRC = src/
 DIR_OBJ = obj/
 
-FLAGS = -Werror -Wextra -Wall -g
+FLAGS = -Werror -Wextra -Wall -g -o3
 
 SRC = \
 		action_philo.c \

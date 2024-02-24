@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:45:27 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/24 10:02:36 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 13:06:05 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	print_action(t_philo *philo, int status)
 
 	diff = calc_time(philo->all_d_ph);
 	printf("%llu : philo %d ", diff, philo->idx_philo + 1);
-	if (status == TAKE_FORK)
+	if (status == TAKE_FORK && philo->status != END)
 		printf("is taken fork\n");
-	if (status == EAT)
+	if (status == EAT && philo->status != END)
 		printf("is eating\n");
-	if (status == SLEEP)
+	if (status == SLEEP && philo->status != END)
 		printf("is sleeping\n");
-	if (status == THINK)
+	if (status == THINK && philo->status != END)
 		printf("is thinking\n");
-	if (status == DEAD)
+	if (status == DEAD && philo->status != END)
 	{
 		printf("died\n");
 		philo->loop = DEAD;
@@ -39,9 +39,10 @@ void	end_message(t_philo **philo, int i, t_checker checker)
 {
 	long long int diff;
 
+	(void) checker;
 	diff = calc_time(philo[i]->all_d_ph);
 	printf("%llu : ", diff);
-	clear_stop(philo, checker, i);
+	// clear_stop(philo, checker, i);
 	if (philo[i]->status == DEAD)
 		printf("The simulation was failed\n");
 	else

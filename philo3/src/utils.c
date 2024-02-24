@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:24:00 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/23 11:41:27 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 13:34:06 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ unsigned long long int	calc_time(t_data_simulation *d_sim)
 {
 	unsigned long long int	tmp_start;
 	unsigned long long int	tmp_end;
-	unsigned long long int	diff;
+	long long int			diff;
 
 	gettimeofday(&d_sim->gtimer->end, NULL);
 	tmp_end = (d_sim->gtimer->end.tv_sec * MS_TO_SEC\
@@ -58,12 +58,12 @@ unsigned long long int	calc_time_philo(t_philo *philo)
 {
 	unsigned long long int	tmp_start;
 	unsigned long long int	tmp_end;
-	unsigned long long int	diff;
+	long long int	diff;
 
 	gettimeofday(&philo->ptime->end, NULL);
-	tmp_end = (philo->ptime->end.tv_sec * MS_TO_SEC \
+	tmp_end = (philo->ptime->end.tv_sec\
 				+ philo->ptime->end.tv_usec);
-	tmp_start = (philo->ptime->start.tv_sec * MS_TO_SEC \
+	tmp_start = (philo->ptime->start.tv_sec\
 				+ philo->ptime->start.tv_usec);
 	diff = tmp_end - tmp_start;
 	return (diff);
