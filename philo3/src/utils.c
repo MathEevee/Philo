@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:24:00 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/24 13:34:06 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:12:12 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ unsigned long long int	calc_time(t_data_simulation *d_sim)
 	long long int			diff;
 
 	gettimeofday(&d_sim->gtimer->end, NULL);
-	tmp_end = (d_sim->gtimer->end.tv_sec * MS_TO_SEC\
-			+ d_sim->gtimer->end.tv_usec) / 1000;
-	tmp_start = (d_sim->gtimer->start.tv_sec * MS_TO_SEC\
-			+ d_sim->gtimer->start.tv_usec) / 1000;
+	tmp_end = (d_sim->gtimer->end.tv_sec * SEC_MS\
+			+ d_sim->gtimer->end.tv_usec) / MS_USEC;
+	tmp_start = (d_sim->gtimer->start.tv_sec * SEC_MS\
+			+ d_sim->gtimer->start.tv_usec) / MS_USEC;
 	diff = tmp_end - tmp_start;
 	return (diff);
 }
@@ -61,10 +61,10 @@ unsigned long long int	calc_time_philo(t_philo *philo)
 	long long int	diff;
 
 	gettimeofday(&philo->ptime->end, NULL);
-	tmp_end = (philo->ptime->end.tv_sec\
-				+ philo->ptime->end.tv_usec);
-	tmp_start = (philo->ptime->start.tv_sec\
-				+ philo->ptime->start.tv_usec);
+	tmp_end = (philo->ptime->end.tv_sec * SEC_MS\
+				+ philo->ptime->end.tv_usec) / MS_USEC;
+	tmp_start = (philo->ptime->start.tv_sec * SEC_MS\
+				+ philo->ptime->start.tv_usec) / MS_USEC;
 	diff = tmp_end - tmp_start;
 	return (diff);
 }

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:02 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/24 12:51:30 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:58:27 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ static int	value_philo(t_philo *philo, int i, pthread_mutex_t *m_phi, t_data_sim
 static int	philo_data(t_philo **philo, int nbr_philo, pthread_mutex_t	*m_phi, t_data_simulation *d_sim)
 {
 	int i;
-	pthread_mutex_t	*write;
 
 	i = 0;
-	write = malloc(sizeof(pthread_mutex_t));
 	while (i < nbr_philo)
 	{
 		philo[i] = malloc(sizeof(t_philo));
@@ -74,7 +72,7 @@ static int	philo_data(t_philo **philo, int nbr_philo, pthread_mutex_t	*m_phi, t_
 		}
 		i++;
 	}
-	pthread_mutex_init(write, NULL);
+	pthread_mutex_init(m_phi, NULL);
 	init_forkl(philo, nbr_philo);
 	return (0);
 }

@@ -6,29 +6,32 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:16:33 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/24 13:29:25 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:49:29 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int    check_full(t_philo **philo, t_checker checker)
+static int	check_full(t_philo **philo, t_checker checker)
 {
 	int i;
 	int nbr_philo_full;
 	
 	nbr_philo_full = 0;
 	i = 0;
-	pthread_mutex_lock(philo[0]->write);
 	while (i < checker.nbr_of_philo)
 	{
+		pthread_mutex_lock(philo[i]->write);
 		if (philo[i]->status_meals == FULL_PHILO)
 			nbr_philo_full++;
 		if (nbr_philo_full >= checker.nbr_of_philo)
+		{
+			pthread_mutex_unlock(philo[i]->write);
 			return (1);
+		}
+		pthread_mutex_unlock(philo[i]->write);
 		i++;
 	}
-	pthread_mutex_unlock(philo[0]->write);
 	return (0);
 }
 
@@ -44,8 +47,6 @@ void	check_time_actions(t_philo *philo)
 	time_to_eat = philo->all_d_ph->time_to_eat;
 	time_to_sleep = philo->all_d_ph->time_to_sleep;
 	time_to_die = philo->all_d_ph->time_to_die;
-	printf("diff + time_to_eat %lld\n", diff + time_to_eat);
-	printf("diff + time_to_sleep %lld\n", diff + time_to_sleep);
 	if (diff + time_to_sleep >= time_to_die)
 		philo_die(philo, diff);
 	if (diff + time_to_eat >= time_to_die)
@@ -67,7 +68,7 @@ void	check_life(t_philo **philo, t_checker checker, t_data_simulation *d_sim)
         }
         if (philo[i]->status == DEAD)
 		{
-            checker.status_finish = DEAD;
+			checker.status_finish = DEAD;
 			set_end(philo, checker);
 			break ;
 		}
@@ -76,5 +77,5 @@ void	check_life(t_philo **philo, t_checker checker, t_data_simulation *d_sim)
             i = 0;
 	}
 	gettimeofday(&d_sim->gtimer->end, NULL);
-	end_message(philo, i, checker);
+	end_message(philo, checker);
 }

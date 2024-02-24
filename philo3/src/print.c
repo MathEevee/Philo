@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:45:27 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/24 13:06:05 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:45:42 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,14 @@ void	print_action(t_philo *philo, int status)
 	{
 		printf("died\n");
 		philo->loop = DEAD;
-		return ;
 	}
 }
 
 
-void	end_message(t_philo **philo, int i, t_checker checker)
+void	end_message(t_philo **philo, t_checker checker)
 {
-	long long int diff;
-
-	(void) checker;
-	diff = calc_time(philo[i]->all_d_ph);
-	printf("%llu : ", diff);
-	// clear_stop(philo, checker, i);
-	if (philo[i]->status == DEAD)
+	clear_stop(philo, checker);
+	if (checker.status_finish == DEAD)
 		printf("The simulation was failed\n");
 	else
 		printf("The simulation was successful\n");

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:12 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/24 13:11:36 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:16:58 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <stdio.h>
+# define SEC_MS 1000000
+# define MS_USEC 1000
 # define LOOP 1
 # define END 2
 # define FULL_PHILO 3
 # define DEAD 6
 # define NOTHING 1
-# define MS_TO_SEC 1000000
 # define TAKE_FORK 1
 // # define TAKE_FORK_R 2
 # define EAT 3
@@ -80,12 +81,12 @@ void	start_simulation_philo(t_philo **philo, t_checker checker, t_data_simulatio
 /*clear.c*/
 void	free_philo(t_philo **philo);
 void	set_end(t_philo **philo, t_checker checker);
-void clear_stop(t_philo **philo, t_checker checker, int i);
+void clear_stop(t_philo **philo, t_checker checker);
 /*philo_create.c*/
 int	init_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
 /*print.c*/
 void	print_action(t_philo *philo, int status);
-void	end_message(t_philo **philo, int i, t_checker checker);
+void	end_message(t_philo **philo, t_checker checker);
 /*simulation.c*/
 int	begin_simulation(char *av, t_data_simulation *data_sim);
 void	start_simulation_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
