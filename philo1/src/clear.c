@@ -6,29 +6,38 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:48:10 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/21 09:37:16 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:04:11 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void clear_stop(t_philo **philo, t_checker *checker, int i)
+void	set_end(t_philo **philo, t_checker checker)
+{
+	int	i;
+
+	i = 0;
+	while (i < checker.nbr_of_philo)
+	{
+		if (philo[i]->status != DEAD)
+			philo[i]->status = END;
+		i++;
+	}
+}
+
+void clear_stop(t_philo **philo, t_checker checker)
 {
 	int	j;
 
 	j = 0;
 	while (philo[j] != NULL)
 	{
-		pthread_mutex_destroy(philo[j]->forkr);
-		pthread_mutex_destroy(philo[j]->forkl);
-		if (j == i)
-			j++;
-		if (j == checker->nbr_of_philo)
-			break ;
 		pthread_join(philo[j]->philosopher, NULL);
+		if (j == checker.nbr_of_philo)
+			break ;
+		j++;
 	}
 	free_philo(philo);
-	free(checker);
 }
 
 void	free_philo(t_philo **philo)
@@ -38,7 +47,11 @@ void	free_philo(t_philo **philo)
 	i = 0;
 	while (philo[i] != NULL)
 	{
+		pthread_mutex_unlock(philo[i]->forkl);
+		pthread_mutex_unlock(philo[i]->forkr);
 		free(philo[i]);
+		pthread_mutex_destroy(philo[i]->forkr);
+		pthread_detach(philo[i]->philosopher);
 		i++;
 	}
 	free(philo);

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:24:00 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/21 09:50:18 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:12:12 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ long long int	ft_atoll(char *nbr)
 	return (sum);
 }
 
-unsigned long long int	calc_time(t_checker *checker)
+unsigned long long int	calc_time(t_data_simulation *d_sim)
 {
 	unsigned long long int	tmp_start;
 	unsigned long long int	tmp_end;
-	unsigned long long int	diff;
+	long long int			diff;
 
-	gettimeofday(&checker->end, NULL);
-	tmp_end = (checker->end.tv_sec * MS_TO_SEC\
-			+ checker->end.tv_usec) / 1000;
-	tmp_start = (checker->start.tv_sec * MS_TO_SEC\
-			+ checker->start.tv_usec) / 1000;
+	gettimeofday(&d_sim->gtimer->end, NULL);
+	tmp_end = (d_sim->gtimer->end.tv_sec * SEC_MS\
+			+ d_sim->gtimer->end.tv_usec) / MS_USEC;
+	tmp_start = (d_sim->gtimer->start.tv_sec * SEC_MS\
+			+ d_sim->gtimer->start.tv_usec) / MS_USEC;
 	diff = tmp_end - tmp_start;
 	return (diff);
 }
@@ -58,13 +58,13 @@ unsigned long long int	calc_time_philo(t_philo *philo)
 {
 	unsigned long long int	tmp_start;
 	unsigned long long int	tmp_end;
-	unsigned long long int	diff;
+	long long int	diff;
 
-	gettimeofday(&philo->end_philo, NULL);
-	tmp_end = (philo->end_philo.tv_sec * MS_TO_SEC \
-				+ philo->end_philo.tv_usec);
-	tmp_start = (philo->start_philo.tv_sec * MS_TO_SEC \
-				+ philo->start_philo.tv_usec);
+	gettimeofday(&philo->ptime->end, NULL);
+	tmp_end = (philo->ptime->end.tv_sec * SEC_MS\
+				+ philo->ptime->end.tv_usec) / MS_USEC;
+	tmp_start = (philo->ptime->start.tv_sec * SEC_MS\
+				+ philo->ptime->start.tv_usec) / MS_USEC;
 	diff = tmp_end - tmp_start;
 	return (diff);
 }

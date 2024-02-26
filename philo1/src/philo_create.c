@@ -6,74 +6,89 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:02 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/21 10:02:30 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:27:19 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void init_forkl(t_philo **philo, t_checker *checker)
+static void init_forkl(t_philo **philo, int nbr_philo)
 {
 	int	i;
 
 	i = 0;
-	while (i < checker->nbr_of_philo)
+	while (i < nbr_philo)
 	{
 		if (i == 0)
-			philo[i]->forkl = philo[checker->nbr_of_philo - 1]->forkr;
+			philo[i]->forkl = philo[nbr_philo - 1]->forkr;
 		else
 			philo[i]->forkl = philo[i - 1]->forkr;
-		printf("philo[%d]->forkl < %p\n", i ,philo[i]->forkl);
 		i++;
 	}
 }
 
 
-static void	init_forkr(t_philo *philo)
+static int	value_philo(t_philo *philo, int i, pthread_mutex_t *m_phi, t_data_simulation *d_sim)
 {
+	t_times_philo *timer;
 	pthread_mutex_t	*forkr;
-	
+
+	timer = malloc(sizeof(t_times_philo));
+	if (timer == NULL)
+		return (-1);
 	forkr = malloc(sizeof(pthread_mutex_t));
+	if (forkr == NULL)
+		return (-1);
+	philo->ptime = timer;
+	philo->all_d_ph = d_sim;
+	philo->nbr_meals_count = 0;
+	philo->status_meals = NOTHING;
+	philo->write = m_phi;
+	philo->status = NOTHING;
+	philo->idx_philo = i;
+	philo->loop = LOOP;
 	philo->forkr = forkr;
 	pthread_mutex_init(philo->forkr, NULL);
-}
+	return (0);
+}	
 
-static void	init_value_philo(t_philo *philo, char **av, int i)
+static int	philo_data(t_philo **philo, int nbr_philo, pthread_mutex_t	*m_phi, t_data_simulation *d_sim)
 {
-	philo->nbr_meals_count = 0;
-	philo->status = THINK;
-	philo->idx_philo = i;
-	philo->time_to_die = ft_atoll(av[2]);
-	philo->time_to_eat = ft_atoll(av[3]);
-	philo->time_to_sleep = ft_atoll(av[4]);
-	philo->nbr_of_meals_total = ft_atoll(av[5]);
-	init_forkr(philo);
-}
-
-t_philo	**philo_init(t_checker *checker, char **av)
-{
-	int				i;
-	t_philo			**philo;
-	pthread_mutex_t	*write;
+	int i;
 
 	i = 0;
-	checker->finish = LOOP;
-	gettimeofday(&checker->start, NULL);
-	write = malloc(sizeof(pthread_mutex_t));
-	philo = malloc(sizeof(t_philo) * (checker->nbr_of_philo + 1));
-	//protec
-	while (i < checker->nbr_of_philo)
+	while (i < nbr_philo)
 	{
 		philo[i] = malloc(sizeof(t_philo));
-		//protec
-		init_value_philo(philo[i], av, i);
-		philo[i]->write = write;
-		// printf("philo[%d]->forkr > %p\n", i ,philo[i]->forkr);
+		if (philo[i] == NULL)
+		{
+			// free_philo(philo);
+			return (-1);
+		}
+		if (value_philo(philo[i], i, m_phi, d_sim) == -1)
+		{
+			// free_philo(philo);
+			return (-1);
+		}
 		i++;
 	}
-	init_forkl(philo, checker);
-	pthread_mutex_init(write, NULL);
-	printf("%d\n", i);
-	// print_all(checker, philo);
-	return (philo);
+	pthread_mutex_init(m_phi, NULL);
+	init_forkl(philo, nbr_philo);
+	return (0);
+}
+
+int	init_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim)
+{
+	pthread_mutex_t	*philo_print;
+
+	philo_print = malloc(sizeof(pthread_mutex_t));
+	if (philo_print == NULL)
+	{
+		free(philo);
+		return (-1);
+	}
+	if (philo_data(philo, checker.nbr_of_philo, philo_print, d_sim) == -1)
+		// clear_all()
+	pthread_mutex_init(philo_print, NULL);
+	return (0);
 }

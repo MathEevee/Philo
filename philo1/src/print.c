@@ -6,47 +6,44 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:45:27 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/21 09:53:21 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:37:48 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	print_action(t_checker *checker, int i, t_philo *philo)
+#include <stdbool.h>
+void	print_action(t_philo *philo, int status)
 {
 	long long int	diff;
+	static bool		dead_print = false;
 
-	gettimeofday(&checker->end, NULL);
-	diff = calc_time(checker);
-	printf("%llu : philo %d ", diff, i + 1);
-	if (philo->status == TAKE_FORK_R)
-		printf("taken a fork\n");
-	if (philo->status == EAT)
+	pthread_mutex_lock(philo->write);
+	diff = calc_time(philo->all_d_ph);
+	printf("%llu : philo %d ", diff, philo->idx_philo + 1);
+	if (status == TAKE_FORK && philo->status != END)
+		printf("is taken fork\n");
+	if (status == EAT && philo->status != END)
 		printf("is eating\n");
-	if (philo->status == SLEEP)
+	if (status == SLEEP && philo->status != END)
 		printf("is sleeping\n");
-	if (philo->status == THINK)
+	if (status == THINK && philo->status != END)
 		printf("is thinking\n");
-	if (philo->status == DEAD)
+	if (status == DEAD && philo->status != END && dead_print == false)
 	{
+		dead_print = true;
 		printf("died\n");
-		checker->finish = END;
-		return ;
+		philo->loop = DEAD;
 	}
-	philo->print = NO;
+	pthread_mutex_unlock(philo->write);
 }
 
-void	end_message(t_philo **philo, t_checker *checker, int nbr_of_philo_full)
-{
-	int	i;
-	long long int diff;
 
-	i = 0;
-	diff = calc_time(checker);
-	printf("%llu : ", diff);
-	if (nbr_of_philo_full == checker->nbr_of_philo)
-		printf("The simulation was successful\n");
-	else
+void	end_message(t_philo **philo, t_checker checker)
+{
+	(void) philo;
+	// clear_stop(philo, checker);
+	if (checker.status_finish == DEAD)
 		printf("The simulation was failed\n");
-	clear_stop(philo, checker, i);
+	else
+		printf("The simulation was successful\n");
 }
