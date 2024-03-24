@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:48:10 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 15:13:23 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:29:47 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_end(t_philo **philo, t_checker checker)
 	}
 }
 
-void clear_stop(t_philo **philo, t_checker checker)
+void	clear_stop(t_philo **philo, t_checker checker)
 {
 	int	j;
 
@@ -50,13 +50,16 @@ void	free_philo(t_philo **philo)
 	free(philo[0]->write);
 	while (philo[i] != NULL)
 	{
-		// pthread_mutex_unlock(&philo[i]->forkr);
-		// pthread_mutex_unlock(philo[i]->forkl);
 		pthread_mutex_destroy(&philo[i]->forkr);
 		free(philo[i]->ptime);
 		free(philo[i]);
-		// pthread_detach(philo[i]->philosopher);
 		i++;
 	}
 	free(philo);
+}
+
+void	data_clear(t_data_simulation *d_sim)
+{
+	free(d_sim->gtimer);
+	free(d_sim);
 }

@@ -6,7 +6,7 @@
 #    By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 10:22:01 by matde-ol          #+#    #+#              #
-#    Updated: 2024/02/24 11:32:20 by matde-ol         ###   ########.fr        #
+#    Updated: 2024/03/24 16:35:51 by matde-ol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,10 @@ SRC = \
 		clear.c \
 		philo_create.c \
 		print.c \
-		simulation.c \
+		routine.c \
 		utils.c \
-		main.c \
-		fichier_a_suppr.c
+		start_simulation.c \
+		main.c
 
 OBJ = $(addprefix $(DIR_OBJ),$(SRC:.c=.o))
 

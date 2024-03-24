@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:12 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 12:31:46 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:43:01 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_times_philo
 	struct timeval	end;
 }			t_times_philo;
 
-typedef struct	s_data_simulation
+typedef struct s_data_simulation
 {
 	long long int	time_to_eat;
 	long long int	time_to_sleep;
@@ -48,7 +48,7 @@ typedef struct	s_data_simulation
 typedef struct s_philo
 {
 	t_times_philo		*ptime;
-	t_data_simulation 	*all_d_ph;
+	t_data_simulation	*all_d_ph;
 	pthread_t			philosopher;
 	pthread_mutex_t		*forkl;
 	pthread_mutex_t		forkr;
@@ -66,9 +66,7 @@ typedef struct s_checker
 	int				status_finish;
 }				t_checker;
 
-
 /*action_philo.c*/
-void	philo_think(t_philo *philo);
 int		philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_die(t_philo *philo, long long int diff);
@@ -76,28 +74,28 @@ void	philo_die(t_philo *philo, long long int diff);
 int		check_arg(int ac, char **av);
 /*check_life_philo.c*/
 void	check_time_actions(t_philo *philo);
-void	check_life(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
-void	start_simulation_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
+void	check_life(t_philo **philo, t_checker checker,
+			t_data_simulation *d_sim);
 /*clear.c*/
 void	free_philo(t_philo **philo);
 void	set_end(t_philo **philo, t_checker checker);
 void	clear_stop(t_philo **philo, t_checker checker);
+void	data_clear(t_data_simulation *d_sim);
 /*philo_create.c*/
-int	init_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
+int		init_philo(t_philo **philo, t_checker checker,
+			t_data_simulation *d_sim);
 /*print.c*/
 void	print_action(t_philo *philo, int status);
-void	end_message(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
-/*simulation.c*/
-int	begin_simulation(char *av, t_data_simulation *data_sim);
-void	start_simulation_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
+void	end_message(t_philo **philo, t_checker checker,
+			t_data_simulation *d_sim);
+/*routine.c*/
+int		philo_routine(t_philo *philo);
+void	*life_philo(void *arg);
+/*start_simlation.c*/
+int		begin_simulation(char *av, t_data_simulation *data_sim);
 /*utils.c*/
-long long int	ft_atoll(char *nbr);
-unsigned long long int	calc_time(t_data_simulation *d_sim);
-unsigned long long int	calc_time_philo(t_philo *philo);
-
-
-/*suppresion*/
-void	print_all(t_checker checker, t_philo **philo);
-
+ssize_t	ft_atoll(char *nbr);
+size_t	calc_time(t_data_simulation *d_sim);
+size_t	calc_time_philo(t_philo *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:38 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 12:35:51 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:21:38 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static int	check_is_digit(char **av)
 	int	j;
 
 	j = 1;
-	while(av[j] != NULL)
+	while (av[j] != NULL)
 	{
 		i = 0;
-		while(av[j][i] != '\0')
+		while (av[j][i] != '\0')
 		{
 			if (!(av[j][i] >= '0' && av[j][i] <= '9'))
 			{

@@ -6,13 +6,13 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:02 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 12:26:18 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:26:24 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void init_forkl(t_philo **philo, int nbr_philo)
+static void	init_forkl(t_philo **philo, int nbr_philo)
 {
 	int	i;
 
@@ -27,10 +27,10 @@ static void init_forkl(t_philo **philo, int nbr_philo)
 	}
 }
 
-
-static int	value_philo(t_philo *philo, int i, pthread_mutex_t *m_phi, t_data_simulation *d_sim)
+static int	value_philo(t_philo *philo, int i, pthread_mutex_t *m_phi,
+			t_data_simulation *d_sim)
 {
-	t_times_philo *timer;
+	t_times_philo	*timer;
 
 	timer = malloc(sizeof(t_times_philo));
 	if (timer == NULL)
@@ -45,24 +45,23 @@ static int	value_philo(t_philo *philo, int i, pthread_mutex_t *m_phi, t_data_sim
 	philo->loop = LOOP;
 	pthread_mutex_init(&philo->forkr, NULL);
 	return (0);
-}	
+}
 
-static int	philo_data(t_philo **philo, int nbr_philo, pthread_mutex_t	*m_phi, t_data_simulation *d_sim)
+static int	philo_data(t_philo **philo, int nbr_philo, pthread_mutex_t *m_phi,
+			t_data_simulation *d_sim)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < nbr_philo)
 	{
 		philo[i] = malloc(sizeof(t_philo));
 		if (philo[i] == NULL)
-		{
-			// free_philo(philo);
 			return (-1);
-		}
 		if (value_philo(philo[i], i, m_phi, d_sim) == -1)
 		{
-			// free_philo(philo);
+			free(philo[i]);
+			philo[i] = NULL;
 			return (-1);
 		}
 		i++;
@@ -81,10 +80,15 @@ int	init_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim)
 	if (philo_print == NULL)
 	{
 		free(philo);
+		data_clear(d_sim);
 		return (-1);
 	}
 	pthread_mutex_init(philo_print, NULL);
 	if (philo_data(philo, checker.nbr_of_philo, philo_print, d_sim) == -1)
-		; // clear_all()
+	{
+		free_philo(philo);
+		data_clear(d_sim);
+		return (-1);
+	}
 	return (0);
 }
