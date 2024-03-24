@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:02 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/27 10:57:13 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:26:18 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static int	philo_data(t_philo **philo, int nbr_philo, pthread_mutex_t	*m_phi, t_
 		}
 		i++;
 	}
+	philo[i] = NULL;
 	pthread_mutex_init(m_phi, NULL);
 	init_forkl(philo, nbr_philo);
 	return (0);
@@ -82,8 +83,8 @@ int	init_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim)
 		free(philo);
 		return (-1);
 	}
-	if (philo_data(philo, checker.nbr_of_philo, philo_print, d_sim) == -1)
-		// clear_all()
 	pthread_mutex_init(philo_print, NULL);
+	if (philo_data(philo, checker.nbr_of_philo, philo_print, d_sim) == -1)
+		; // clear_all()
 	return (0);
 }

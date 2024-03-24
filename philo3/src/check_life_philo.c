@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:16:33 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/27 11:40:53 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:46:52 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,16 @@ void	check_time_actions(t_philo *philo)
 	time_to_eat = philo->all_d_ph->time_to_eat;
 	time_to_sleep = philo->all_d_ph->time_to_sleep;
 	time_to_die = philo->all_d_ph->time_to_die;
-	if (diff + time_to_sleep >= time_to_die)
+	if (time_to_sleep - diff >= time_to_die)
+	{
+		// printf("%d yes1 %lld %lld\n", );
 		philo_die(philo, diff);
-	if (diff + time_to_eat >= time_to_die)
+	}
+	if (time_to_eat - diff>= time_to_die)
+	{
+		// printf("%d yes2\n", philo->idx_philo);
 		philo_die(philo, diff);
+	}
 }
 
 void	check_life(t_philo **philo, t_checker checker, t_data_simulation *d_sim)
@@ -68,16 +74,20 @@ void	check_life(t_philo **philo, t_checker checker, t_data_simulation *d_sim)
             checker.status_finish = FULL_PHILO;
             break ;
         }
+		pthread_mutex_lock(philo[i]->write);
         if (philo[i]->status == DEAD)
 		{
 			checker.status_finish = DEAD;
+			pthread_mutex_unlock(philo[i]->write);
 			set_end(philo, checker);
 			break ;
 		}
+		pthread_mutex_unlock(philo[i]->write);
         i++;
         if (i >= checker.nbr_of_philo)
             i = 0;
+		usleep(100);
 	}
 	gettimeofday(&d_sim->gtimer->end, NULL);
-	end_message(philo, checker);
+	end_message(philo, checker, d_sim);
 }

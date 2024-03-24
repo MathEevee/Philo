@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:38 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/23 10:59:41 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:35:51 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_is_digit(char **av)
 		{
 			if (!(av[j][i] >= '0' && av[j][i] <= '9'))
 			{
-				write(2, "Arguments are not valid\n", 20);
+				write(2, "Arguments are not valid\n", 24);
 				return (-1);
 			}
 			i++;
@@ -37,7 +37,7 @@ static int	check_is_digit(char **av)
 
 static int	check_arg_nbr(int ac)
 {
-	if (ac <= 5)
+	if (ac <= 4)
 	{
 		write(2, "Too few arguments\n", 18);
 		return (-1);
@@ -61,7 +61,7 @@ static int	check_data(char **av)
 	while (av[i] != NULL)
 	{
 		ref = ft_atoll(av[i]);
-		if (ref < 0 || ref > 2147483647)
+		if (ref <= 0 || ref > 2147483647)
 		{
 			write(2, "Invalid number\n", 15);
 			return (-1);

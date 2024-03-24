@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:36 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/27 12:00:14 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:45:09 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,42 @@ static void	first_part(t_philo *philo)
 static int	philo_routine(t_philo *philo)
 {
 	check_time_actions(philo);
+	pthread_mutex_lock(philo->write);
 	if (philo->status == DEAD)
+	{
+		pthread_mutex_unlock(philo->write);
 		return (-1);
-	philo_eat(philo);
+	}
+	pthread_mutex_unlock(philo->write);
+	if (philo_eat(philo) == -1)
+	{
+		philo_die(philo, calc_time_philo(philo));
+		return (-1);
+	}
 	check_time_actions(philo);
+	pthread_mutex_lock(philo->write);
 	if (philo->status == DEAD)
+	{
+		pthread_mutex_unlock(philo->write);
 		return (-1);
+	}
+	pthread_mutex_unlock(philo->write);
 	philo_sleep(philo);
 	check_time_actions(philo);
+	pthread_mutex_lock(philo->write);
 	if (philo->status == DEAD)
+	{
+		pthread_mutex_unlock(philo->write);
 		return (-1);
+	}
+	pthread_mutex_unlock(philo->write);
+	pthread_mutex_lock(philo->write);
 	if (philo->status_meals == FULL_PHILO)
+	{
+		pthread_mutex_unlock(philo->write);
 		return (-1);
+	}
+	pthread_mutex_unlock(philo->write);
 	check_time_actions(philo);
 	return (0);
 }

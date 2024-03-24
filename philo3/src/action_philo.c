@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:31:16 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/27 10:57:47 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:43:35 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	philo_die(t_philo *philo, long long int diff)
 	long long int	time_to_die;
 	
 	time_to_die = philo->all_d_ph->time_to_die;
-	usleep((time_to_die - diff));
+	usleep((time_to_die - diff) * 1000);
 	// pthread_mutex_lock(philo->write);
+	pthread_mutex_lock(philo->write);
 	philo->status = DEAD;
+	pthread_mutex_unlock(philo->write);
 	print_action(philo, DEAD);
 	// pthread_mutex_unlock(philo->write);
 	// free(philo->write);
@@ -34,20 +36,39 @@ void	philo_take_a_fork(t_philo *philo, pthread_mutex_t *fork)
 	// pthread_mutex_unlock(philo->write);
 }
 
-void	philo_eat(t_philo *philo)
+int	philo_eat(t_philo *philo)
 {
-	philo_take_a_fork(philo, philo->forkl);
-	philo_take_a_fork(philo, &philo->forkr);
+	pthread_mutex_t	*forkl;
+	pthread_mutex_t	*forkr;
+
+	if (philo->idx_philo % 2)
+	{
+		forkl = philo->forkl;
+		forkr = &philo->forkr;
+	}
+	else
+	{
+		forkr = philo->forkl;
+		forkl = &philo->forkr;
+	}
+	if (forkl == forkr)
+	{
+		return (-1);
+	}
+
+	philo_take_a_fork(philo, forkl);
+	philo_take_a_fork(philo, forkr);
 	// pthread_mutex_lock(philo->write);
 	philo->nbr_meals_count += 1;
 	print_action(philo, EAT);
-	if (philo->nbr_meals_count >= philo->all_d_ph->nbr_of_meals)
+	gettimeofday(&philo->ptime->start, NULL);
+	if (philo->all_d_ph->nbr_of_meals != -1 && philo->nbr_meals_count >= philo->all_d_ph->nbr_of_meals)
 		philo->status_meals = FULL_PHILO;
 	// pthread_mutex_unlock(philo->write);
 	usleep(philo->all_d_ph->time_to_eat * 1000);
-	gettimeofday(&philo->ptime->start, NULL);
-	pthread_mutex_unlock(&philo->forkr);
-	pthread_mutex_unlock(philo->forkl);
+	pthread_mutex_unlock(forkl);
+	pthread_mutex_unlock(forkr);
+	return (0);
 }
 
 void	philo_sleep(t_philo *philo)

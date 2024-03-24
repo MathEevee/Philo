@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:12 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/02/27 10:57:01 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:31:46 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_checker
 
 /*action_philo.c*/
 void	philo_think(t_philo *philo);
-void	philo_eat(t_philo *philo);
+int		philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_die(t_philo *philo, long long int diff);
 /*check_arg.c*/
@@ -81,12 +81,12 @@ void	start_simulation_philo(t_philo **philo, t_checker checker, t_data_simulatio
 /*clear.c*/
 void	free_philo(t_philo **philo);
 void	set_end(t_philo **philo, t_checker checker);
-void clear_stop(t_philo **philo, t_checker checker);
+void	clear_stop(t_philo **philo, t_checker checker);
 /*philo_create.c*/
 int	init_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
 /*print.c*/
 void	print_action(t_philo *philo, int status);
-void	end_message(t_philo **philo, t_checker checker);
+void	end_message(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
 /*simulation.c*/
 int	begin_simulation(char *av, t_data_simulation *data_sim);
 void	start_simulation_philo(t_philo **philo, t_checker checker, t_data_simulation *d_sim);
