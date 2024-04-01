@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:05:31 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 12:37:13 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:45:47 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	init_checker(char **av, t_data_simulation *data_simulation)
 {
 	t_times_philo		*time;
-
 
 	time = malloc(sizeof(t_times_philo));
 	if (time == NULL)
