@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:16:33 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 17:04:38 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:11:17 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ static int	check_full(t_philo **philo, t_checker checker)
 	return (0);
 }
 
+static void	check_status(t_checker *checker, t_philo **philo, int status, int i)
+{
+	checker->status_finish = status;
+	pthread_mutex_unlock(philo[i]->write);
+	set_end(philo, *checker);
+}
+
 void	check_time_actions(t_philo *philo)
 {
 	long long int	diff;
@@ -46,19 +53,16 @@ void	check_time_actions(t_philo *philo)
 	pthread_mutex_lock(philo->write);
 	philo_status = philo->status;
 	pthread_mutex_unlock(philo->write);
+	if (philo_status == EAT && time_to_eat + diff > time_to_die)
+		philo_die(philo, diff);
+	if (philo_status == THINK && diff > time_to_die)
+		philo_die(philo, diff);
+	if (philo_status == TAKE_FORK && time_to_eat > time_to_die)
+		philo_die(philo, diff);
 	if (philo_status == EAT && time_to_sleep + diff > time_to_die)
 		philo_die(philo, diff);
-	if (philo_status == TAKE_FORK && diff > time_to_die)
-		philo_die(philo, diff);
-	if (philo_status == SLEEP && diff > time_to_die)
-		philo_die(philo, diff);
-}
-
-static void	check_status(t_checker *checker, t_philo **philo, int status, int i)
-{
-	checker->status_finish = status;
-	pthread_mutex_unlock(philo[i]->write);
-	set_end(philo, *checker);
+	// if (philo_status == TAKE_FORK && time_to_eat + diff > time_to_die)
+	// 	philo_die(philo, diff);
 }
 
 void	check_life(t_philo **philo, t_checker checker, t_data_simulation *d_sim)

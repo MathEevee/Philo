@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 21:37:06 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/01 22:20:54 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:34:35 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,18 @@ int	philo_eat(t_philo *philo)
 {
 	if (philo_take_a_fork(philo) == -1)
 		return (-1);
-	check_time_actions(philo);
 	if (check_eat_philo(philo) == -1)
 		return (-1);
 	philo->nbr_meals_count += 1;
 	print_action(philo, EAT);
 	pthread_mutex_lock(philo->write);
 	philo->status = EAT;
+	pthread_mutex_unlock(philo->write);
+	check_time_actions(philo);
 	if (philo->all_d_ph->nbr_of_meals != -1
 		&& philo->nbr_meals_count >= philo->all_d_ph->nbr_of_meals)
 		philo->status_meals = FULL_PHILO;
-	pthread_mutex_unlock(philo->write);
-	pthread_mutex_lock(philo->write);
 	gettimeofday(&philo->ptime->start, NULL);
-	pthread_mutex_unlock(philo->write);
 	usleep(philo->all_d_ph->time_to_eat * 1000);
 	pthread_mutex_unlock(philo->forkl);
 	pthread_mutex_unlock(&philo->forkr);

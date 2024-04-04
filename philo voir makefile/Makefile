@@ -16,7 +16,7 @@ CC = cc
 DIR_SRC = src/
 DIR_OBJ = obj/
 
-FLAGS = -Werror -Wextra -Wall -g
+FLAGS = -Werror -Wextra -Wall
 
 SRC = \
 		action_philo.c \
@@ -28,6 +28,7 @@ SRC = \
 		routine.c \
 		utils.c \
 		start_simulation.c \
+		philo_meals.c \
 		main.c
 
 OBJ = $(addprefix $(DIR_OBJ),$(SRC:.c=.o))
@@ -41,11 +42,11 @@ $(DIR_OBJ)%.o : $(DIR_SRC)%.c
 	@mkdir -p $(DIR_OBJ)
 	$(CC) $(FLAGS) -c $< -o $@
 		
-fclean : clean
-	make -C $(DIR_OBJ) fclean
-	rm -f $(NAME)
 clean :
 	rm -rf $(DIR_OBJ) clean
+	
+fclean : clean
+	rm -f $(NAME)
 
 re : clean all
 

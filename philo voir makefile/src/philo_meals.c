@@ -1,44 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   action_philo.c                                     :+:      :+:    :+:   */
+/*   philo_meals.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 14:31:16 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 17:04:15 by matde-ol         ###   ########.fr       */
+/*   Created: 2024/04/02 10:16:24 by matde-ol          #+#    #+#             */
+/*   Updated: 2024/04/04 11:12:50 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	philo_die(t_philo *philo, long long int diff)
-{
-	long long int	time_to_die;
-
-	time_to_die = philo->all_d_ph->time_to_die;
-	if (time_to_die - diff > 0)
-		usleep((time_to_die - diff) * 1000);
-	print_action(philo, DEAD);
-	pthread_mutex_lock(philo->write);
-	philo->status = DEAD;
-	pthread_mutex_unlock(philo->write);
-}
 
 static int	philo_take_a_fork(t_philo *philo)
 {
 	pthread_mutex_t	*forkl;
 	pthread_mutex_t	*forkr;
 
+	forkr = philo->forkl;
+	forkl = &philo->forkr;
 	if (philo->idx_philo % 2)
 	{
 		forkl = philo->forkl;
 		forkr = &philo->forkr;
-	}
-	else
-	{
-		forkr = philo->forkl;
-		forkl = &philo->forkr;
 	}
 	if (forkl == forkr)
 	{
@@ -49,14 +33,15 @@ static int	philo_take_a_fork(t_philo *philo)
 	print_action(philo, TAKE_FORK);
 	pthread_mutex_lock(forkl);
 	print_action(philo, TAKE_FORK);
+	pthread_mutex_lock(philo->write);
+	philo->status = TAKE_FORK;
+	pthread_mutex_unlock(philo->write);
+	check_time_actions(philo);
 	return (0);
 }
 
-int	philo_eat(t_philo *philo)
+static int	check_meals_status(t_philo *philo)
 {
-	if (philo_take_a_fork(philo) == -1)
-		return (-1);
-	check_time_actions(philo);
 	pthread_mutex_lock(philo->write);
 	if (philo->status == DEAD)
 	{
@@ -66,26 +51,30 @@ int	philo_eat(t_philo *philo)
 		return (-1);
 	}
 	pthread_mutex_unlock(philo->write);
+	return (0);
+}
+
+int	philo_eat(t_philo *philo)
+{
+	if (philo_take_a_fork(philo) == -1)
+		return (-1);
+	check_time_actions(philo);
+	if (check_meals_status(philo) == -1)
+		return (-1);
 	philo->nbr_meals_count += 1;
 	print_action(philo, EAT);
 	pthread_mutex_lock(philo->write);
-	philo->status = EAT;
 	if (philo->all_d_ph->nbr_of_meals != -1
 		&& philo->nbr_meals_count >= philo->all_d_ph->nbr_of_meals)
 		philo->status_meals = FULL_PHILO;
 	pthread_mutex_unlock(philo->write);
 	gettimeofday(&philo->ptime->start, NULL);
+	pthread_mutex_lock(philo->write);
+	philo->status = EAT;
+	pthread_mutex_unlock(philo->write);
+	check_time_actions(philo);
 	usleep(philo->all_d_ph->time_to_eat * 1000);
 	pthread_mutex_unlock(philo->forkl);
 	pthread_mutex_unlock(&philo->forkr);
 	return (0);
-}
-
-void	philo_sleep(t_philo *philo)
-{
-	print_action(philo, SLEEP);
-	pthread_mutex_lock(philo->write);
-	philo->status = SLEEP;
-	pthread_mutex_unlock(philo->write);
-	usleep(philo->all_d_ph->time_to_sleep * 1000);
 }

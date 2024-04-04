@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:12 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/01 21:41:52 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:19:53 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
 # define LOOP 1
 # define END 2
 # define FULL_PHILO 3
-# define DEAD 6
+# define DEAD 8
 # define NOTHING 1
-# define TAKE_FORK 1
-# define EAT 2
-# define SLEEP 3
-# define THINK 4
+# define TAKE_FORK 4
+# define EAT 5
+# define SLEEP 6
+# define THINK 7
 
 typedef struct s_times_philo
 {
@@ -70,6 +70,7 @@ typedef struct s_checker
 int		philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_die(t_philo *philo, long long int diff);
+void	philo_think(t_philo *philo);
 /*check_arg.c*/
 int		check_arg(int ac, char **av);
 /*check_life_philo.c*/

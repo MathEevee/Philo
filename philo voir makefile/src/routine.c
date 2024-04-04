@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:36 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 17:00:16 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:38:04 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static void	first_part(t_philo *philo)
 {
-	print_action(philo, THINK);
+	philo_think(philo);
 	if ((philo->idx_philo + 1) % 2 == 0)
 		usleep(500);
 }
 
-int	get_philo_status(t_philo *philo)
+static int	get_philo_status(t_philo *philo)
 {
 	int	res;
 
@@ -62,11 +62,12 @@ void	*life_philo(void *arg)
 	gettimeofday(&philo->ptime->start, NULL);
 	check_time_actions(philo);
 	first_part(philo);
+	check_time_actions(philo);
 	while (philo->status_meals == NOTHING)
 	{
 		if (philo_routine(philo) == -1)
 			break ;
-		print_action(philo, THINK);
+		philo_think(philo);
 	}
 	return (NULL);
 }

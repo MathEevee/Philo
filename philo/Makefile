@@ -42,11 +42,11 @@ $(DIR_OBJ)%.o : $(DIR_SRC)%.c
 	@mkdir -p $(DIR_OBJ)
 	$(CC) $(FLAGS) -c $< -o $@
 		
-fclean : clean
-	make -C $(DIR_OBJ) fclean
-	rm -f $(NAME)
 clean :
 	rm -rf $(DIR_OBJ) clean
+	
+fclean : clean
+	rm -f $(NAME)
 
 re : clean all
 

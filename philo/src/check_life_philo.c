@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:16:33 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/01 22:19:02 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:33:16 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,24 @@ void	check_time_actions(t_philo *philo)
 	long long int	diff;
 	long long int	time_to_sleep;
 	long long int	time_to_die;
-	// long long int	time_to_eat;
+	long long int	time_to_eat;
 	int				philo_status;
 
 	gettimeofday(&philo->ptime->end, NULL);
 	diff = calc_time_philo(philo);
 	time_to_sleep = philo->all_d_ph->time_to_sleep;
 	time_to_die = philo->all_d_ph->time_to_die;
-	// time_to_eat = philo->all_d_ph->time_to_eat;
+	time_to_eat = philo->all_d_ph->time_to_eat;
 	pthread_mutex_lock(philo->write);
 	philo_status = philo->status;
-	pthread_mutex_unlock(philo->write);	
-	// if (philo_status == TAKE_FORK && time_to_eat > time_to_die)
-	// 	philo_die(philo, time_to_die);
-	// if (philo_status == EAT && time_to_sleep > time_to_die)
-	// 	philo_die(philo, time_to_die);
-	if (philo_status == EAT && time_to_sleep + diff > time_to_die)
+	pthread_mutex_unlock(philo->write);
+	if (philo_status == THINK && diff > time_to_die)
+		philo_die(philo, diff);
+	if (philo_status == TAKE_FORK && time_to_eat > time_to_die)
 		philo_die(philo, diff);
 	if (philo_status == TAKE_FORK && diff > time_to_die)
+		philo_die(philo, diff);
+	if (philo_status == EAT && diff > time_to_die)
 		philo_die(philo, diff);
 	if (philo_status == SLEEP && diff > time_to_die)
 		philo_die(philo, diff);

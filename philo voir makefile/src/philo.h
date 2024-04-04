@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:12 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 16:43:01 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/04 09:37:20 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@
 # define LOOP 1
 # define END 2
 # define FULL_PHILO 3
-# define DEAD 6
 # define NOTHING 1
-# define TAKE_FORK 1
-// # define TAKE_FORK_R 2
-# define EAT 3
-# define SLEEP 4
-# define THINK 5
+# define TAKE_FORK 3
+# define EAT 4
+# define SLEEP 5
+# define THINK 6
+# define DEAD 7
 
 typedef struct s_times_philo
 {
@@ -67,15 +66,17 @@ typedef struct s_checker
 }				t_checker;
 
 /*action_philo.c*/
-int		philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
+void	philo_think(t_philo *philo);
 void	philo_die(t_philo *philo, long long int diff);
+/*philo_meals.c*/
+int		philo_eat(t_philo *philo);
 /*check_arg.c*/
 int		check_arg(int ac, char **av);
 /*check_life_philo.c*/
-void	check_time_actions(t_philo *philo);
 void	check_life(t_philo **philo, t_checker checker,
 			t_data_simulation *d_sim);
+void	check_time_actions(t_philo *philo);
 /*clear.c*/
 void	free_philo(t_philo **philo);
 void	set_end(t_philo **philo, t_checker checker);
