@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:36 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/04 12:37:51 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:45:51 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	*life_philo(void *arg)
 	gettimeofday(&philo->ptime->start, NULL);
 	check_time_actions(philo);
 	first_part(philo);
-	while (philo->status_meals == NOTHING)
+	while (philo->status_meals == LOOP)
 	{
 		if (philo_routine(philo) == -1)
 			break ;

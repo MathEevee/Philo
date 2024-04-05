@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:16:33 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/04 12:33:16 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:57:10 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ void	check_time_actions(t_philo *philo)
 	pthread_mutex_unlock(philo->write);
 	if (philo_status == THINK && diff > time_to_die)
 		philo_die(philo, diff);
-	if (philo_status == TAKE_FORK && time_to_eat > time_to_die)
-		philo_die(philo, diff);
 	if (philo_status == TAKE_FORK && diff > time_to_die)
-		philo_die(philo, diff);
-	if (philo_status == EAT && diff > time_to_die)
 		philo_die(philo, diff);
 	if (philo_status == SLEEP && diff > time_to_die)
 		philo_die(philo, diff);

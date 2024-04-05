@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:45:27 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/04 13:40:07 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:10:17 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,11 @@ void	print_action(t_philo *philo, int status)
 	pthread_mutex_unlock(philo->write);
 }
 
-static void	print_action(t_philo **philo, t_checker checker,
-		t_data_simulation *d_sim)
-{
-	int				i;
-	long long int	diff;
-
-	i = 0;
-	while (i < checker.nbr_of_philo)
-	{
-		if (philo[i]->status == DEAD)
-		{
-			diff = philo[i]->;
-			printf("%llu : philo %d died\n", diff, i + 1);
-			break ;
-		}
-		i++;
-	}
-}
-
 void	end_message(t_philo **philo, t_checker checker,
 		t_data_simulation *d_sim)
 {
 	(void) philo;
 	pthread_mutex_lock(philo[0]->write);
-	// print die 
 	if (checker.status_finish == DEAD)
 		printf("The simulation was failed\n");
 	else

@@ -6,7 +6,7 @@
 #    By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 10:22:01 by matde-ol          #+#    #+#              #
-#    Updated: 2024/04/01 21:42:50 by matde-ol         ###   ########.fr        #
+#    Updated: 2024/04/05 13:50:45 by matde-ol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ FLAGS = -Werror -Wextra -Wall -g
 SRC = \
 		action_philo.c \
 		philo_meals.c \
+		take_forks.c \
 		check_arg.c \
 		check_life_philo.c \
 		clear.c \

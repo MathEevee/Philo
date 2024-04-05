@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:02 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 16:26:24 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:52:27 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	value_philo(t_philo *philo, int i, pthread_mutex_t *m_phi,
 			t_data_simulation *d_sim)
 {
 	t_times_philo	*timer;
+	t_forks			fork;
 
 	timer = malloc(sizeof(t_times_philo));
 	if (timer == NULL)
@@ -38,12 +39,13 @@ static int	value_philo(t_philo *philo, int i, pthread_mutex_t *m_phi,
 	philo->ptime = timer;
 	philo->all_d_ph = d_sim;
 	philo->nbr_meals_count = 0;
-	philo->status_meals = NOTHING;
+	philo->status_meals = LOOP;
 	philo->write = m_phi;
-	philo->status = NOTHING;
+	philo->status = LOOP;
 	philo->idx_philo = i;
 	philo->loop = LOOP;
-	pthread_mutex_init(&philo->forkr, NULL);
+	pthread_mutex_init(&(philo->forkr.mutex), NULL);
+	fork.in_use = false;
 	return (0);
 }
 

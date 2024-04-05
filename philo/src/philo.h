@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:12 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/04 12:19:53 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:56:52 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,21 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <stdio.h>
-#include <stdbool.h>
+# include <stdbool.h>
+
 # define SEC_MS 1000000
 # define MS_USEC 1000
-# define LOOP 1
-# define END 2
-# define FULL_PHILO 3
-# define DEAD 8
-# define NOTHING 1
-# define TAKE_FORK 4
-# define EAT 5
-# define SLEEP 6
-# define THINK 7
+
+enum e_status {
+	LOOP,
+	END,
+	FULL_PHILO,
+	DEAD,
+	TAKE_FORK,
+	EAT,
+	SLEEP,
+	THINK,
+};
 
 typedef struct s_times_philo
 {
@@ -45,14 +48,20 @@ typedef struct s_data_simulation
 	t_times_philo	*gtimer;
 }			t_data_simulation;
 
+typedef struct s_forks
+{
+	bool			in_use;
+	pthread_mutex_t	mutex;
+}			t_forks;
+
 typedef struct s_philo
 {
 	t_times_philo		*ptime;
 	t_data_simulation	*all_d_ph;
 	pthread_t			philosopher;
-	pthread_mutex_t		*forkl;
-	pthread_mutex_t		forkr;
 	pthread_mutex_t		*write;
+	t_forks				*forkl;
+	t_forks				forkr;
 	int					nbr_meals_count;
 	int					status;
 	int					status_meals;
@@ -98,5 +107,8 @@ int		begin_simulation(char *av, t_data_simulation *data_sim);
 ssize_t	ft_atoll(char *nbr);
 size_t	calc_time(t_data_simulation *d_sim);
 size_t	calc_time_philo(t_philo *philo);
+/*take_fork.c*/
+int		philo_take_a_fork(t_philo *philo);
+void	delock_fork(t_philo *philo);
 
 #endif
