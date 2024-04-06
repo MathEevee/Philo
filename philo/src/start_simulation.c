@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 16:30:58 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/03/24 16:44:35 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:02:26 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ int	begin_simulation(char *av, t_data_simulation *data_sim)
 	}
 	checker.status_finish = LOOP;
 	if (init_philo(philo, checker, data_sim) == -1)
-	{
-		free_philo(philo);
-		data_clear(data_sim);
 		return (-1);
-	}
 	start_simulation_philo(philo, checker, data_sim);
 	return (0);
 }

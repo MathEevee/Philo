@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:02 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/06 11:41:18 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:02:15 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ static int	value_philo(t_philo *philo, int i, pthread_mutex_t *m_phi,
 {
 	t_times_philo	*timer;
 
+	philo->write = m_phi;
+	pthread_mutex_init(&(philo->forkr.mutex), NULL);
 	timer = malloc(sizeof(t_times_philo));
+	philo->ptime = timer;
 	if (timer == NULL)
 		return (-1);
-	philo->ptime = timer;
 	philo->all_d_ph = d_sim;
 	philo->nbr_meals_count = 0;
 	philo->status_meals = LOOP;
-	philo->write = m_phi;
 	philo->status = LOOP;
 	philo->idx = i;
 	philo->loop = LOOP;
-	pthread_mutex_init(&(philo->forkr.mutex), NULL);
 	philo->forkr.in_use = false;
 	return (0);
 }
@@ -58,11 +58,14 @@ static int	philo_data(t_philo **philo, int nbr_philo, pthread_mutex_t *m_phi,
 	{
 		philo[i] = malloc(sizeof(t_philo));
 		if (philo[i] == NULL)
+		{
+			if (i == 0)
+				free(m_phi);
 			return (-1);
+		}
 		if (value_philo(philo[i], i, m_phi, d_sim) == -1)
 		{
-			free(philo[i]);
-			philo[i] = NULL;
+			philo[i + 1] = NULL;
 			return (-1);
 		}
 		i++;
