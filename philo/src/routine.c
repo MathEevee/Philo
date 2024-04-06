@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:10:36 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/05 13:45:51 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:41:18 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	first_part(t_philo *philo)
 {
 	philo_think(philo);
-	if ((philo->idx_philo + 1) % 2 == 0)
+	if ((philo->idx + 1) % 2 == 0)
 		usleep(500);
 }
 

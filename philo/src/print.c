@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:45:27 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/05 12:10:17 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:41:18 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void	print_action(t_philo *philo, int status)
 		return ;
 	}
 	if (status == TAKE_FORK)
-		printf("%llu : philo %d is taken fork\n", diff, philo->idx_philo + 1);
+		printf("%llu : philo %d has taken a fork\n", diff, philo->idx + 1);
 	if (status == EAT)
-		printf("%llu : philo %d is eating\n", diff, philo->idx_philo + 1);
+		printf("%llu : philo %d is eating\n", diff, philo->idx + 1);
 	if (status == SLEEP)
-		printf("%llu : philo %d is sleeping\n", diff, philo->idx_philo + 1);
+		printf("%llu : philo %d is sleeping\n", diff, philo->idx + 1);
 	if (status == THINK)
-		printf("%llu : philo %d is thinking\n", diff, philo->idx_philo + 1);
+		printf("%llu : philo %d is thinking\n", diff, philo->idx + 1);
 	if (status == DEAD)
 	{
-		printf("%llu : philo %d died\n", diff, philo->idx_philo + 1);
+		printf("%llu : philo %d died\n", diff, philo->idx + 1);
 		died = true;
 		philo->loop = DEAD;
 	}

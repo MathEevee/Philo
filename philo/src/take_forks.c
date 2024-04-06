@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:37:16 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/05 13:50:01 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:41:18 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	lock_fork(t_philo *philo, t_forks *forkl, t_forks *forkr)
 	pthread_mutex_unlock(philo->write);
 	print_action(philo, TAKE_FORK);
 	pthread_mutex_lock(philo->write);
-	forkr->in_use = true;
+	forkl->in_use = true;
 	philo->status = TAKE_FORK;
 	pthread_mutex_unlock(philo->write);
 	print_action(philo, TAKE_FORK);
@@ -60,7 +60,7 @@ void	delock_fork(t_philo *philo)
 	t_forks	*forkl;
 	t_forks	*forkr;
 
-	if (philo->idx_philo % 2)
+	if (philo->idx % 2)
 	{
 		forkl = philo->forkl;
 		forkr = &philo->forkr;
@@ -83,7 +83,7 @@ int	philo_take_a_fork(t_philo *philo)
 	t_forks	*forkl;
 	t_forks	*forkr;
 
-	if (philo->idx_philo % 2)
+	if (philo->idx % 2)
 	{
 		forkl = philo->forkl;
 		forkr = &philo->forkr;

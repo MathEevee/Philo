@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:31:16 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/05 12:33:04 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:37:20 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ void	philo_die(t_philo *philo, long long int diff)
 
 	time_to_die = philo->all_d_ph->time_to_die;
 	time_to_eat = philo->all_d_ph->time_to_eat;
-	if (time_to_die < time_to_eat)
-		usleep(time_to_die - diff * 1000);
-	else if (time_to_die - diff > 0)
+	if (time_to_die - diff > 0)
 		usleep((time_to_die - diff) * 1000);
 	print_action(philo, DEAD);
 	pthread_mutex_lock(philo->write);

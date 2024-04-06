@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:48:10 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/05 12:27:32 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:12:26 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	free_philo(t_philo **philo)
 	free(philo[0]->write);
 	while (philo[i] != NULL)
 	{
-		pthread_mutex_destroy(&(philo[i]->forkl->mutex));
+		pthread_mutex_destroy(&(philo[i]->forkr.mutex));
 		free(philo[i]->ptime);
 		free(philo[i]);
 		i++;

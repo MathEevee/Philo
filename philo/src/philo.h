@@ -6,7 +6,7 @@
 /*   By: matde-ol <matde-ol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:06:12 by matde-ol          #+#    #+#             */
-/*   Updated: 2024/04/05 13:56:52 by matde-ol         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:41:18 by matde-ol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_philo
 	int					nbr_meals_count;
 	int					status;
 	int					status_meals;
-	int					idx_philo;
+	int					idx;
 	int					loop;
 }				t_philo;
 
