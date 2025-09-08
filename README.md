@@ -1,6 +1,6 @@
 # 🍽️ philosopher
 
-Le programme doit gérer des cycles de "vie".
+Le programme doit gérer des cycles de "vie" en C.
 
 La vie d'un philosophe est de penser, manger et dormir.
 
