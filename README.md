@@ -9,6 +9,7 @@ Le philosophe a besoin de deux "fourchettes" pour manger, ils en ramènent chacu
 ## 📷 Schéma
 
 <img width="290" height="267" alt="Screenshot from 2025-09-08 11-56-49" src="https://github.com/user-attachments/assets/08aedf49-5f20-4026-8426-656f99e46e14" />
+<img width="290" height="267" alt="Screenshot from 2025-09-08 12-04-58" src="https://github.com/user-attachments/assets/777bc53a-e811-400c-97a7-775ddc228376" />
 
 🟦 : Philosophe
 🟪 : Fourchette
@@ -31,6 +32,7 @@ On doit générer un thread par philosophe, ils ne doivent pas communiquer entre
 1. **Compiler** le programme :
    ```bash
    cd philo
+
    make
    ```
 
