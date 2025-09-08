@@ -12,6 +12,7 @@ Le philosophe a besoin de deux "fourchettes" pour manger, ils en ramènent chacu
 <img width="290" height="267" alt="Screenshot from 2025-09-08 12-04-58" src="https://github.com/user-attachments/assets/777bc53a-e811-400c-97a7-775ddc228376" />
 
 🟦 : Philosophe
+
 🟪 : Fourchette
 
 
