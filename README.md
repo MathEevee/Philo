@@ -6,7 +6,13 @@ La vie d'un philosophe est de penser, manger et dormir.
 
 Le philosophe a besoin de deux "fourchettes" pour manger, ils en ramènent chacun une. La difficulté est de gérer le "partage" pour ne pas faire de data race ou de duplication de données créer par les fonctions de thread.
 
+## 📷 Schéma
+
 <img width="290" height="267" alt="Screenshot from 2025-09-08 11-56-49" src="https://github.com/user-attachments/assets/08aedf49-5f20-4026-8426-656f99e46e14" />
+
+🟦 : Philosophe
+🟪 : Fourchette
+
 
 Le but est de savoir si les cycles avec les temps donnés et le nombre de philosophe fonctionnent :
 
